@@ -42,61 +42,84 @@ set -u -o pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
 LOG_ROOT="$ROOT_DIR/logs/sweeps/$TIMESTAMP"
-mkdir -p "$LOG_ROOT/openai" "$LOG_ROOT/anthropic" "$LOG_ROOT/xai"
+mkdir -p "$LOG_ROOT/openai" "$LOG_ROOT/anthropic" "$LOG_ROOT/xai" "$LOG_ROOT/together"
 
 # Helper: run one command, append logs, never stop the script on failure
 run_and_log() {
   local log_file="$1"; shift
+  local provider_log="$1"; shift
   local cmd=("$@")
-  echo "[$(date +%H:%M:%S)] START: ${cmd[*]}" | tee -a "$log_file"
-  # Run sequentially; capture failure but continue script
-  ("${cmd[@]}" >>"$log_file" 2>&1) || echo "[$(date +%H:%M:%S)] FAIL: ${cmd[*]}" | tee -a "$log_file"
-  echo "[$(date +%H:%M:%S)] END: ${cmd[*]}" | tee -a "$log_file"
+  # START/END + command stdout go to both per-run log and provider aggregate log
+  echo "[$(date +%H:%M:%S)] START: ${cmd[*]}" | tee -a "$log_file" | tee -a "$provider_log" >/dev/null
+  ("${cmd[@]}" 2>&1 | tee -a "$log_file" | tee -a "$provider_log" >/dev/null) || \
+    echo "[$(date +%H:%M:%S)] FAIL: ${cmd[*]}" | tee -a "$log_file" | tee -a "$provider_log" >/dev/null
+  echo "[$(date +%H:%M:%S)] END: ${cmd[*]}" | tee -a "$log_file" | tee -a "$provider_log" >/dev/null
 }
 
 run_openai_group() {
   local outdir="$LOG_ROOT/openai"
+  local provider_log="$outdir/provider.log"
   local common=(medqa-deep run.n_rows=all model.max_send_messages=100)
 
   # 4o (no reasoning)
-  run_and_log "$outdir/openai_gpt-4o-2024-08-06.log" \
+  run_and_log "$outdir/openai_gpt-4o-2024-08-06.log" "$provider_log" \
     "${common[@]}" model.id=openai/gpt-4o-2024-08-06
 
   # gpt-5-mini (low/high)
-  run_and_log "$outdir/openai_gpt-5-mini-2025-08-07_low.log" \
+  run_and_log "$outdir/openai_gpt-5-mini-2025-08-07_low.log" "$provider_log" \
     "${common[@]}" model.id=openai/gpt-5-mini-2025-08-07 model.extra_kwargs.reasoning_effort=low
-  run_and_log "$outdir/openai_gpt-5-mini-2025-08-07_high.log" \
+  run_and_log "$outdir/openai_gpt-5-mini-2025-08-07_high.log" "$provider_log" \
     "${common[@]}" model.id=openai/gpt-5-mini-2025-08-07 model.extra_kwargs.reasoning_effort=high
 
   # gpt-5 (medium and no-reasoning)
-  run_and_log "$outdir/openai_gpt-5-2025-08-07_medium.log" \
+  run_and_log "$outdir/openai_gpt-5-2025-08-07_medium.log" "$provider_log" \
     "${common[@]}" model.id=openai/gpt-5-2025-08-07 model.extra_kwargs.reasoning_effort=medium
-  run_and_log "$outdir/openai_gpt-5-2025-08-07_off.log" \
+  run_and_log "$outdir/openai_gpt-5-2025-08-07_off.log" "$provider_log" \
     "${common[@]}" model.id=openai/gpt-5-2025-08-07
 }
 
 run_anthropic_group() {
   local outdir="$LOG_ROOT/anthropic"
+  local provider_log="$outdir/provider.log"
   local common=(medqa-deep run.n_rows=all model.max_send_messages=20)
 
   # Sonnet 4.5 / 4 — no reasoning (omit extended thinking)
-  run_and_log "$outdir/anthropic_claude-sonnet-4-5-20250929_off.log" \
+  run_and_log "$outdir/anthropic_claude-sonnet-4-5-20250929_off.log" "$provider_log" \
     "${common[@]}" model.id=anthropic/claude-sonnet-4-5-20250929
-  run_and_log "$outdir/anthropic_claude-sonnet-4-20250514_off.log" \
+  run_and_log "$outdir/anthropic_claude-sonnet-4-20250514_off.log" "$provider_log" \
     "${common[@]}" model.id=anthropic/claude-sonnet-4-20250514
 }
 
 run_xai_group() {
   local outdir="$LOG_ROOT/xai"
+  local provider_log="$outdir/provider.log"
   local common=(medqa-deep run.n_rows=all model.max_send_messages=20)
 
   # Fast non-reasoning variant
-  run_and_log "$outdir/xai_grok-4-fast-non-reasoning.log" \
+  run_and_log "$outdir/xai_grok-4-fast-non-reasoning.log" "$provider_log" \
     "${common[@]}" model.id=xai/grok-4-fast-non-reasoning
 
   # grok-4-0709 — no public param to force disable reasoning; running default
-  run_and_log "$outdir/xai_grok-4-0709_off.log" \
+  run_and_log "$outdir/xai_grok-4-0709_off.log" "$provider_log" \
     "${common[@]}" model.id=xai/grok-4-0709
+}
+
+run_together_group() {
+  local outdir="$LOG_ROOT/together"
+  local provider_log="$outdir/provider.log"
+  local common=(medqa-deep run.n_rows=all model.max_send_messages=20)
+
+  # together_ai/openai/gpt-oss-20b
+  run_and_log "$outdir/together_openai_gpt-oss-20b.log" "$provider_log" \
+    "${common[@]}" model.id=together_ai/openai/gpt-oss-20b
+
+  # openai/gpt-oss-120b
+  run_and_log "$outdir/together_openai_gpt-oss-120b.log" "$provider_log" \
+    "${common[@]}" model.id=openai/gpt-oss-120b
+
+  # together_ai/Qwen/Qwen2.5-72B-Instruct
+  run_and_log "$outdir/together_qwen2.5-72b-instruct.log" "$provider_log" \
+    "${common[@]}" model.id=together_ai/Qwen/Qwen2.5-72B-Instruct
 }
 
 echo "Logs will be written to: $LOG_ROOT"
@@ -108,10 +131,13 @@ run_anthropic_group &
 PID_ANTHROPIC=$!
 run_xai_group &
 PID_XAI=$!
+run_together_group &
+PID_TOGETHER=$!
 
 wait $PID_OPENAI || true
 wait $PID_ANTHROPIC || true
 wait $PID_XAI || true
+wait $PID_TOGETHER || true
 
 echo "\n==== Sweep Completed ===="
 echo "Log root: $LOG_ROOT"

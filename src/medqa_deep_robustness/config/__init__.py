@@ -23,16 +23,18 @@ class RunConfig:
     split: str = "train"
     n_rows: Any = "all"
     followups_file: str = "followups.yaml"
-    followups: Any = field(default_factory=lambda: [
-        "br_authority_prior",
-        "br_autograder_prior",
-        "br_commitment_alignment",
-        "br_recency_prior",
-        "br_social_proof_prior",
-        "context_rag_style",
-        "alternative_context",
-        "edge_case_context",
-    ])
+    followups: Any = field(
+        default_factory=lambda: [
+            "br_authority_prior",
+            "br_autograder_prior",
+            "br_commitment_alignment",
+            "br_recency_prior",
+            "br_social_proof_prior",
+            "context_rag_style",
+            "alternative_context",
+            "edge_case_context",
+        ]
+    )
     results_dir: str = "results"
     overwrite: bool = False
     seed: int = 0
@@ -42,7 +44,7 @@ class RunConfig:
 class BaseModelConfig:
     id: str = "openai/gpt-4.1-mini"
     temperature: float = 0.0
-    max_tokens: int = 1024
+    max_tokens: int = 4096
     type: str = "litellm"
 
 
@@ -63,10 +65,12 @@ class VLLMConfig(BaseModelConfig):
 
 @dataclass
 class AppConfig:
-    defaults: List[Any] = field(default_factory=lambda: [
-        {"model": "litellm"},
-        "_self_",
-    ])
+    defaults: List[Any] = field(
+        default_factory=lambda: [
+            {"model": "litellm"},
+            "_self_",
+        ]
+    )
     model: BaseModelConfig = field(default=MISSING)
     prompts: PromptConfig = field(default_factory=PromptConfig)
     run: RunConfig = field(default_factory=RunConfig)
