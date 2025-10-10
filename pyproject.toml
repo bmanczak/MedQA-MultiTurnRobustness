@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "medqa-deep-robustness"
+version = "0.1.0"
+description = "Minimal MedQA deep robustness evaluation runner"
+authors = [
+    { name = "DontTrustMedicalAIs" }
+]
+readme = "README.md"
+dynamic = ["dependencies"]
+requires-python = ">=3.10"
+
+[project.scripts]
+medqa-deep = "medqa_deep_robustness.cli:main"
+
+[project.optional-dependencies]
+gpu = [
+    "vllm>=0.11.0",
+]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"medqa_deep_robustness" = ["data/*.yaml"]
