@@ -92,6 +92,7 @@ class VLLMConfig:
     max_tokens: int
     tensor_parallel_size: int | None
     sampling_kwargs: dict[str, Any]
+    max_model_len: int
 
 
 class VLLMModel:
@@ -106,7 +107,11 @@ class VLLMModel:
         sampling = {"temperature": cfg.temperature, "max_tokens": cfg.max_tokens}
         sampling.update(cfg.sampling_kwargs)
         self.sampling_params = SamplingParams(**sampling)
-        self.engine = LLM(model=cfg.id, tensor_parallel_size=cfg.tensor_parallel_size)
+        self.engine = LLM(
+            model=cfg.id,
+            tensor_parallel_size=cfg.tensor_parallel_size,
+            max_model_len=cfg.max_model_len,
+        )
 
     def _format(self, prompt: str | Sequence[str], system_prompt: str) -> str:
         messages: List[dict[str, str]] = []
@@ -177,6 +182,7 @@ def build_vllm_config(model_cfg) -> VLLMConfig:
         max_tokens=model_cfg.max_tokens,
         tensor_parallel_size=getattr(model_cfg, "tensor_parallel_size", None),
         sampling_kwargs=dict(getattr(model_cfg, "sampling_kwargs", {}) or {}),
+        max_model_len=getattr(model_cfg, "max_model_len", 16384),
     )
 
 

@@ -58,6 +58,7 @@ class VLLMConfig(BaseModelConfig):
     type: str = "vllm"
     tensor_parallel_size: Optional[int] = 1
     sampling_kwargs: Dict[str, Any] = field(default_factory=dict)
+    max_model_len: int = 16384
 
 
 @dataclass
