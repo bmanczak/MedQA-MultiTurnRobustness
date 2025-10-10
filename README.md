@@ -56,7 +56,7 @@ To change the system prompt (empty by default), override it inline:
 medqa-deep prompts.system_prompt="You are a cautious medical assistant." run.n_rows=5
 ```
 
-The default configuration runs the eight follow-ups highlighted in the NeurIPS spotlight paper:
+The default configuration runs the eight follow-ups highlighted in our paper:
 
 - Authority prior (`br_authority_prior`)
 - Autograder prior (`br_autograder_prior`)
