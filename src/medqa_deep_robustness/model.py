@@ -74,6 +74,7 @@ class LitellmModel:
 
         return outputs
 
+
 @dataclass
 class LiteLLMConfig:
     id: str
@@ -130,7 +131,34 @@ class VLLMModel:
 
 def build_litellm_config(model_cfg) -> LiteLLMConfig:
     extra = dict(getattr(model_cfg, "extra_kwargs", {}) or {})
-    generate_kwargs = {"temperature": model_cfg.temperature, "max_tokens": model_cfg.max_tokens}
+
+    # Normalize provider-specific parameters
+    model_id = str(model_cfg.id)
+    lowered = model_id.lower()
+    is_gpt5 = "gpt-5" in lowered
+    is_anthropic = lowered.startswith("anthropic/") or "claude" in lowered
+
+    temperature = model_cfg.temperature
+    max_tokens = model_cfg.max_tokens
+
+    # GPT-5 requires temperature=1
+    if is_gpt5:
+        temperature = 1.0
+
+    # Claude Sonnet: if extended thinking requested via extra_kwargs.reasoning_effort, enforce temp=1
+    if is_anthropic and ("reasoning_effort" in extra):
+        temperature = 1.0
+        # Provide a small default thinking budget if not provided by user
+        extra.setdefault("thinking", {"type": "enabled", "budget_tokens": 1024})
+        # Ensure max_tokens exceeds thinking budget
+        try:
+            budget = int(extra["thinking"]["budget_tokens"])  # type: ignore[index]
+            if max_tokens <= budget:
+                max_tokens = budget + 256
+        except Exception:  # noqa: BLE001
+            pass
+
+    generate_kwargs = {"temperature": temperature, "max_tokens": max_tokens}
     generate_kwargs.update(extra)
     return LiteLLMConfig(
         id=model_cfg.id,

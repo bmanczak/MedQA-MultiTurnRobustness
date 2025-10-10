@@ -1,4 +1,4 @@
-# Minimal MedQA Follow-up Runner
+# MedQA Deep Robustness Runner
 
 This repository keeps the public footprint small while reproducing the behaviour of the full DontTrustMedicalAIs pipeline that matters for follow-up studies: prompt construction, cached generations, answer parsing, and flip-rate evaluation.
 
@@ -6,7 +6,7 @@ This repository keeps the public footprint small while reproducing the behaviour
 
 ### Install via `uv add`
 
-If you just want to run the evaluator, install it directly from git:
+Install directly from git if you just need to run the evaluator:
 
 ```bash
 uv add git+https://github.com/donttrustmedicalais/medqa_deep_robustness
@@ -31,16 +31,60 @@ Evaluate a model on the released dataset (defaults: all followups on all rows). 
 medqa-deep run.n_rows=5 model.id=openai/gpt-4.1-mini
 # or using the module directly
 python -m medqa_deep_robustness.cli run.n_rows=5 model.id=openai/gpt-4.1-mini
-# or from a clone
-python run.py run.n_rows=5 model.id=openai/gpt-4.1-mini
 ```
 
-To run all followups on all rows (default), you can omit overrides or set them explicitly:
+To run the full dataset and all follow-ups, simply omit the overrides (this is the default):
 
 ```bash
-python run.py model.id=openai/gpt-4.1-mini
+medqa-deep model.id=openai/gpt-4.1-mini
 # or explicitly
-python run.py run.followups=all run.n_rows=all model.id=openai/gpt-4.1-mini
+medqa-deep run.followups=all run.n_rows=all model.id=openai/gpt-4.1-mini
+```
+
+### Using LiteLLM models and reasoning effort
+
+With LiteLLM (installed via this package), you can target multiple providers by setting `model.id` and optional `model.extra_kwargs`.
+
+Examples:
+
+```bash
+# GPT-5 mini with medium reasoning effort
+medqa-deep run.n_rows=5 \
+  model.id=gpt-5-mini-2025-08-07 \
+  model.extra_kwargs.reasoning_effort=medium
+
+# GPT-5 with high reasoning effort
+medqa-deep run.n_rows=5 \
+  model.id=gpt-5-2025-08-07 \
+  model.extra_kwargs.reasoning_effort=high
+
+# GPT-4o (no reasoning_effort parameter)
+medqa-deep run.n_rows=5 \
+  model.id=gpt-4o-2024-08-06
+
+# Claude Sonnet models (Anthropic)
+medqa-deep run.n_rows=5 \
+  model.id=anthropic/claude-sonnet-4-5-20250929
+
+medqa-deep run.n_rows=5 \
+  model.id=anthropic/claude-sonnet-4-20250514
+
+# Grok models (xAI)
+# Non-reasoning fast variant
+medqa-deep run.n_rows=5 \
+  model.id=xai/grok-4-fast-non-reasoning
+
+# Standard Grok 4
+medqa-deep run.n_rows=5 \
+  model.id=xai/grok-4-0709
+```
+
+Required API keys (export as environment variables before running):
+
+```bash
+export OPENAI_API_KEY=...      # for GPT models
+export ANTHROPIC_API_KEY=...   # for Claude models
+export XAI_API_KEY=...         # for Grok models
 ```
 
 Switch to a self-hosted vLLM model once you have `vllm` installed:
@@ -48,6 +92,14 @@ Switch to a self-hosted vLLM model once you have `vllm` installed:
 ```bash
 uv pip install .[gpu]
 medqa-deep model=vllm model.id=google/medgemma-4b-it run.n_rows=5
+```
+
+### Quick verification
+
+Run a minimal smoke test across the supported IDs to verify API keys and LiteLLM integration:
+
+```bash
+python tmp_verify_models.py
 ```
 
 To change the system prompt (empty by default), override it inline:
@@ -139,7 +191,7 @@ misleading_context | 5 | 40.0%    | -20.0%    | 2        | 0        | 40.0%
 You can regenerate a summary later without re-querying models:
 
 ```bash
-python eval.py --run-dir results/openai_gpt-4.1-mini__dynamoai-ml_MedQA-USMLE-4-MultiTurnRobust__train__<hash>
+python -m medqa_deep_robustness.evaluate --run-dir results/openai_gpt-4.1-mini__dynamoai-ml_MedQA-USMLE-4-MultiTurnRobust__train__<hash>
 ```
 
 ## Notes
