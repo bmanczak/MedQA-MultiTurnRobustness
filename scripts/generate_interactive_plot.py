@@ -189,7 +189,7 @@ def process_results_directory(results_dir: Path) -> List[Dict]:
             continue
 
         model_id = extract_model_name(model_dir.name)
-        
+
         # Skip Grok 4 (incomplete results)
         if "grok" in model_id.lower():
             continue

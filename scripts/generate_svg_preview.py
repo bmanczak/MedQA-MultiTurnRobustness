@@ -22,7 +22,7 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
     """
     # Filter out Grok 4 (incomplete results)
     data = [d for d in data if "grok" not in d["model_name"].lower()]
-    
+
     # Compute statistics per model
     model_stats = {}
     for record in data:
