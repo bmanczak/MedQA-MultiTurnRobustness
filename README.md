@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://bmanczak.github.io/medqa_deep_robustness/">
-    <img src="docs/preview.svg" alt="Interactive chart showing model performance drops" width="100%">
+    <img src="docs/preview.svg?v=2" alt="Interactive chart showing model performance drops" width="100%">
     <br><b>▶ Open the Interactive Chart</b>
   </a>
 </p>
