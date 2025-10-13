@@ -81,7 +81,7 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
         "      .value-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; fill: #2C3E50; font-weight: 500; }",
         "      .axis-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; fill: #2C3E50; }",
         "      .title { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 20px; fill: #2C3E50; font-weight: 600; }",
-        "      .caption { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #7f8c8d; font-style: italic; }",
+        "      .caption { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; fill: #7f8c8d; font-style: italic; }",
         "    </style>",
         "  </defs>",
         "  ",

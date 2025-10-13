@@ -400,7 +400,7 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
         ],
         width=1200,
         height=600,
-        margin=dict(l=80, r=50, t=80, b=160),  # Reduced top margin, adjusted bottom for caption
+        margin=dict(l=80, r=50, t=80, b=180),  # Increased bottom margin for larger caption
         annotations=[
             dict(
                 text=(
@@ -413,10 +413,10 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 xref="paper",
                 yref="paper",
                 x=0.5,
-                y=-0.25,
+                y=-0.27,
                 xanchor="center",
                 yanchor="top",
-                font=dict(size=11, color="#7f8c8d"),  # Gray italic style
+                font=dict(size=13, color="#7f8c8d"),  # Larger gray italic caption
                 align="center",
             )
         ],

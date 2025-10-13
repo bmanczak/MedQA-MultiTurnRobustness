@@ -1,14 +1,15 @@
 # Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs
 
 <p align="center">
+  <a href="https://arxiv.org/abs/XXXX.XXXXX"><img src="https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b.svg" alt="arXiv"></a>
+  <a href="https://huggingface.co/datasets/dynamoai-ml/MedQA-USMLE-4-MultiTurnRobust"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Dataset-blue" alt="Hugging Face Dataset"></a>
+</p>
+
+<p align="center">
   <a href="https://bmanczak.github.io/medqa_deep_robustness/">
     <img src="docs/preview.svg?v=2" alt="Interactive chart showing model performance drops" width="100%">
     <br><b>▶ Open the Interactive Chart</b>
   </a>
-</p>
-
-<p align="center">
-  <em>Hover points to see details • Select intervention types • Drag to zoom • Double-click to reset</em>
 </p>
 
 ### Overview

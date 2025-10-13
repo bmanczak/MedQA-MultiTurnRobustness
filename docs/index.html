@@ -81,10 +81,9 @@
       }
 
       .content-wrap {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 1.5rem;
-        align-items: start;
       }
 
       .followups-panel {
@@ -92,10 +91,8 @@
         border: 1px solid rgba(0, 0, 0, 0.06);
         border-radius: 12px;
         padding: 1rem 1rem;
-        position: sticky;
-        top: 1rem;
-        max-height: calc(100vh - 220px);
-        overflow: auto;
+        max-height: none;
+        overflow: visible;
       }
 
       .followups-panel h2 {
