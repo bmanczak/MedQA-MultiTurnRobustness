@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <style>
+      .grid-line { stroke: #ECF0F1; stroke-width: 1; }
+      .axis-line { stroke: #2C3E50; stroke-width: 2; }
+      .diagonal { stroke: #999; stroke-width: 2; stroke-dasharray: 5,5; }
+      .point { stroke: white; stroke-width: 2; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; }
+      .axis-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; fill: #2C3E50; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 22px; fill: #2C3E50; font-weight: 600; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="white"/>
+  
+  <!-- Title -->
+  <text x="600.0" y="50" text-anchor="middle" class="title">
+    Model Performance: Baseline vs Average After 8 Interventions
+  </text>
+  
+  <!-- Grid lines -->
+  <line x1="80" y1="620.0" x2="1150" y2="620.0" class="grid-line"/>
+  <text x="70" y="624.0" text-anchor="end" class="label" fill="#666">0</text>
+  <line x1="80" y1="516.0" x2="1150" y2="516.0" class="grid-line"/>
+  <text x="70" y="520.0" text-anchor="end" class="label" fill="#666">20</text>
+  <line x1="80" y1="412.0" x2="1150" y2="412.0" class="grid-line"/>
+  <text x="70" y="416.0" text-anchor="end" class="label" fill="#666">40</text>
+  <line x1="80" y1="308.0" x2="1150" y2="308.0" class="grid-line"/>
+  <text x="70" y="312.0" text-anchor="end" class="label" fill="#666">60</text>
+  <line x1="80" y1="204.0" x2="1150" y2="204.0" class="grid-line"/>
+  <text x="70" y="208.0" text-anchor="end" class="label" fill="#666">80</text>
+  <line x1="80" y1="100.0" x2="1150" y2="100.0" class="grid-line"/>
+  <text x="70" y="104.0" text-anchor="end" class="label" fill="#666">100</text>
+  <line x1="80.0" y1="100" x2="80.0" y2="620" class="grid-line"/>
+  <text x="80.0" y="640" text-anchor="middle" class="label" fill="#666">0</text>
+  <line x1="294.0" y1="100" x2="294.0" y2="620" class="grid-line"/>
+  <text x="294.0" y="640" text-anchor="middle" class="label" fill="#666">20</text>
+  <line x1="508.0" y1="100" x2="508.0" y2="620" class="grid-line"/>
+  <text x="508.0" y="640" text-anchor="middle" class="label" fill="#666">40</text>
+  <line x1="722.0" y1="100" x2="722.0" y2="620" class="grid-line"/>
+  <text x="722.0" y="640" text-anchor="middle" class="label" fill="#666">60</text>
+  <line x1="936.0" y1="100" x2="936.0" y2="620" class="grid-line"/>
+  <text x="936.0" y="640" text-anchor="middle" class="label" fill="#666">80</text>
+  <line x1="1150.0" y1="100" x2="1150.0" y2="620" class="grid-line"/>
+  <text x="1150.0" y="640" text-anchor="middle" class="label" fill="#666">100</text>
+  
+  <!-- Axes -->
+  <line x1="80" y1="100" x2="80" y2="620" class="axis-line"/>
+  <line x1="80" y1="620" x2="1150" y2="620" class="axis-line"/>
+  
+  <!-- Axis labels -->
+  <text x="600.0" y="670" text-anchor="middle" class="axis-label">Baseline Accuracy (%)</text>
+  <text x="30" y="350.0" text-anchor="middle" class="axis-label" transform="rotate(-90, 30, 350.0)">Accuracy After Intervention (%)</text>
+  
+  <line x1="80.0" y1="620.0" x2="1150.0" y2="100.0" class="diagonal"/>
+  
+  <!-- Data points -->
+  <circle cx="1105.1619047619047" cy="241.11190476190473" r="8" fill="#FF6B6B" class="point">
+    <title>GPT-5: 95.8% → 72.9% (drop: 22.9%)</title>
+  </circle>
+  <text x="1105.1619047619047" y="229.11190476190473" text-anchor="middle" class="label" fill="#FF6B6B" font-weight="500">GPT-5</text>
+  <circle cx="1091.9142857142856" cy="500.2761904761905" r="8" fill="#4ECDC4" class="point">
+    <title>Grok 4: 94.6% → 23.0% (drop: 71.5%)</title>
+  </circle>
+  <text x="1091.9142857142856" y="488.2761904761905" text-anchor="middle" class="label" fill="#4ECDC4" font-weight="500">Grok 4</text>
+  <circle cx="1084.7809523809524" cy="269.61904761904765" r="8" fill="#45B7D1" class="point">
+    <title>Claude Sonnet 4.5: 93.9% → 67.4% (drop: 26.5%)</title>
+  </circle>
+  <text x="1084.7809523809524" y="257.61904761904765" text-anchor="middle" class="label" fill="#45B7D1" font-weight="500">Claude Sonnet 4.5</text>
+  <circle cx="1083.7619047619048" cy="249.00476190476184" r="8" fill="#FFA07A" class="point">
+    <title>GPT-5 mini: 93.8% → 71.3% (drop: 22.5%)</title>
+  </circle>
+  <text x="1083.7619047619048" y="237.00476190476184" text-anchor="middle" class="label" fill="#FFA07A" font-weight="500">GPT-5 mini</text>
+  <circle cx="1071.5333333333333" cy="192.05238095238093" r="8" fill="#98D8C8" class="point">
+    <title>Gemini 2.5 Flash: 92.7% → 82.3% (drop: 10.4%)</title>
+  </circle>
+  <text x="1071.5333333333333" y="180.05238095238093" text-anchor="middle" class="label" fill="#98D8C8" font-weight="500">Gemini 2.5 Flash</text>
+  <circle cx="1069.4952380952382" cy="366.7476190476191" r="8" fill="#F7DC6F" class="point">
+    <title>Claude Sonnet 4: 92.5% → 48.7% (drop: 43.8%)</title>
+  </circle>
+  <text x="1069.4952380952382" y="354.7476190476191" text-anchor="middle" class="label" fill="#F7DC6F" font-weight="500">Claude Sonnet 4</text>
+  <circle cx="1052.1714285714286" cy="248.81904761904764" r="8" fill="#BB8FCE" class="point">
+    <title>GPT-4o: 90.9% → 71.4% (drop: 19.5%)</title>
+  </circle>
+  <text x="1052.1714285714286" y="236.81904761904764" text-anchor="middle" class="label" fill="#BB8FCE" font-weight="500">GPT-4o</text>
+  <circle cx="1051.152380952381" cy="247.95238095238096" r="8" fill="#85C1E2" class="point">
+    <title>GPT-4o (copy): 90.8% → 71.5% (drop: 19.2%)</title>
+  </circle>
+  <text x="1051.152380952381" y="235.95238095238096" text-anchor="middle" class="label" fill="#85C1E2" font-weight="500">GPT-4o (copy)</text>
+  <circle cx="1050.1333333333332" cy="148.6571428571429" r="8" fill="#F8B739" class="point">
+    <title>GPT-OSS 120B: 90.7% → 90.6% (drop: 0.0%)</title>
+  </circle>
+  <text x="1050.1333333333332" y="136.6571428571429" text-anchor="middle" class="label" fill="#F8B739" font-weight="500">GPT-OSS 120B</text>
+  <circle cx="1005.2952380952379" cy="200.90476190476187" r="8" fill="#52B788" class="point">
+    <title>Grok 4 Fast: 86.5% → 80.6% (drop: 5.9%)</title>
+  </circle>
+  <text x="1005.2952380952379" y="188.90476190476187" text-anchor="middle" class="label" fill="#52B788" font-weight="500">Grok 4 Fast</text>
+  <circle cx="940.0761904761904" cy="324.9" r="8" fill="#E76F51" class="point">
+    <title>Qwen2.5 72B Turbo: 80.4% → 56.8% (drop: 23.6%)</title>
+  </circle>
+  <text x="940.0761904761904" y="312.9" text-anchor="middle" class="label" fill="#E76F51" font-weight="500">Qwen2.5 72B Turbo</text>
+  <circle cx="787.2190476190477" cy="349.847619047619" r="8" fill="#2A9D8F" class="point">
+    <title>MedGemma 4B: 66.1% → 52.0% (drop: 14.1%)</title>
+  </circle>
+  <text x="787.2190476190477" y="337.847619047619" text-anchor="middle" class="label" fill="#2A9D8F" font-weight="500">MedGemma 4B</text>
+</svg>

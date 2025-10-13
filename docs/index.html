@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive visualization showing performance drops of medical LLMs under multi-turn interventions"
+    />
+    <title>MedQA Deep Robustness - Interactive Results</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1.5rem 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        font-weight: 600;
+      }
+
+      .back-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      .back-link:hover {
+        color: #764ba2;
+      }
+
+      .instructions {
+        background: rgba(255, 255, 255, 0.95);
+        max-width: 1400px;
+        margin: 1rem auto;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .instructions p {
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+      }
+
+      .instructions strong {
+        color: #2c3e50;
+      }
+
+      .chart-container {
+        flex: 1;
+        background: white;
+        max-width: 1400px;
+        margin: 0 auto 2rem;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        width: 95%;
+      }
+
+      iframe {
+        width: 100%;
+        height: 850px;
+        border: none;
+        border-radius: 8px;
+      }
+
+      @media (max-width: 768px) {
+        .header-content {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .instructions {
+          padding: 1rem;
+        }
+
+        iframe {
+          height: 600px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-content">
+        <h1>MedQA Deep Robustness: Interactive Results</h1>
+        <a
+          href="https://github.com/donttrustmedicalais/medqa_deep_robustness"
+          class="back-link"
+          >← Back to Repository</a
+        >
+      </div>
+    </header>
+
+    <div class="instructions">
+      <p>
+        <strong>How to use:</strong> Hover over points to see details • Use the
+        dropdown menu to filter by intervention type • Drag to zoom •
+        Double-click to reset view
+      </p>
+      <p>
+        Points below the diagonal line indicate performance drops. The default
+        view shows average performance across 8 different interventions.
+      </p>
+    </div>
+
+    <div class="chart-container">
+      <iframe
+        src="chart.html"
+        title="Interactive performance chart showing model accuracy before and after interventions"
+      ></iframe>
+    </div>
+  </body>
+</html>
