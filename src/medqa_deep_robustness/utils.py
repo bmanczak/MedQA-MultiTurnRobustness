@@ -13,7 +13,7 @@ import yaml
 
 ANSWER_SUFFIX = (
     'Response (think step by step and then end with "Final Answer:" '
-    'followed by *only* the letter corresponding to the correct answer enclosed in parentheses)'
+    "followed by *only* the letter corresponding to the correct answer enclosed in parentheses)"
 )
 
 INSTRUCTION_PREFIX = (
@@ -229,7 +229,5 @@ def format_table(headers: Sequence[str], rows: Sequence[Sequence[Any]]) -> str:
             widths[idx] = max(widths[idx], len(cell))
     header_line = " | ".join(str(header).ljust(widths[idx]) for idx, header in enumerate(headers))
     sep = "-+-".join("-" * width for width in widths)
-    body = [
-        " | ".join(cell.ljust(widths[idx]) for idx, cell in enumerate(row)) for row in str_rows
-    ]
+    body = [" | ".join(cell.ljust(widths[idx]) for idx, cell in enumerate(row)) for row in str_rows]
     return "\n".join([header_line, sep, *body]) if rows else header_line
