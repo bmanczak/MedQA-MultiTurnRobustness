@@ -1,13 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
   <defs>
     <style>
       .grid-line { stroke: #ECF0F1; stroke-width: 1; }
       .axis-line { stroke: #2C3E50; stroke-width: 2; }
-      .diagonal { stroke: #999; stroke-width: 2; stroke-dasharray: 5,5; }
-      .point { stroke: white; stroke-width: 2; }
-      .label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; }
-      .axis-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; fill: #2C3E50; }
-      .title { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 22px; fill: #2C3E50; font-weight: 600; }
+      .zero-line { stroke: #2C3E50; stroke-width: 2; }
+      .bar { fill: rgba(231, 111, 81, 0.1); stroke: #E76F51; stroke-width: 2.5; }
+      .error-bar { stroke: #2C3E50; stroke-width: 1.5; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #2C3E50; }
+      .value-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #2C3E50; font-weight: 500; }
+      .axis-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; fill: #2C3E50; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 20px; fill: #2C3E50; font-weight: 600; }
+      .caption { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 9px; fill: #666; }
     </style>
   </defs>
   
@@ -16,92 +19,159 @@
   
   <!-- Title -->
   <text x="600.0" y="50" text-anchor="middle" class="title">
-    Model Performance: Baseline vs Average After 8 Interventions
+    Accuracy Drop: Average Across 8 Interventions
   </text>
   
   <!-- Grid lines -->
-  <line x1="80" y1="620.0" x2="1150" y2="620.0" class="grid-line"/>
-  <text x="70" y="624.0" text-anchor="end" class="label" fill="#666">0</text>
-  <line x1="80" y1="516.0" x2="1150" y2="516.0" class="grid-line"/>
-  <text x="70" y="520.0" text-anchor="end" class="label" fill="#666">20</text>
-  <line x1="80" y1="412.0" x2="1150" y2="412.0" class="grid-line"/>
-  <text x="70" y="416.0" text-anchor="end" class="label" fill="#666">40</text>
-  <line x1="80" y1="308.0" x2="1150" y2="308.0" class="grid-line"/>
-  <text x="70" y="312.0" text-anchor="end" class="label" fill="#666">60</text>
-  <line x1="80" y1="204.0" x2="1150" y2="204.0" class="grid-line"/>
-  <text x="70" y="208.0" text-anchor="end" class="label" fill="#666">80</text>
-  <line x1="80" y1="100.0" x2="1150" y2="100.0" class="grid-line"/>
-  <text x="70" y="104.0" text-anchor="end" class="label" fill="#666">100</text>
-  <line x1="80.0" y1="100" x2="80.0" y2="620" class="grid-line"/>
-  <text x="80.0" y="640" text-anchor="middle" class="label" fill="#666">0</text>
-  <line x1="294.0" y1="100" x2="294.0" y2="620" class="grid-line"/>
-  <text x="294.0" y="640" text-anchor="middle" class="label" fill="#666">20</text>
-  <line x1="508.0" y1="100" x2="508.0" y2="620" class="grid-line"/>
-  <text x="508.0" y="640" text-anchor="middle" class="label" fill="#666">40</text>
-  <line x1="722.0" y1="100" x2="722.0" y2="620" class="grid-line"/>
-  <text x="722.0" y="640" text-anchor="middle" class="label" fill="#666">60</text>
-  <line x1="936.0" y1="100" x2="936.0" y2="620" class="grid-line"/>
-  <text x="936.0" y="640" text-anchor="middle" class="label" fill="#666">80</text>
-  <line x1="1150.0" y1="100" x2="1150.0" y2="620" class="grid-line"/>
-  <text x="1150.0" y="640" text-anchor="middle" class="label" fill="#666">100</text>
+  <line x1="80" y1="80.0" x2="1150" y2="80.0" class="grid-line"/>
+  <text x="70" y="84.0" text-anchor="end" class="label">2</text>
+  <line x1="80" y1="101.95070273324387" x2="1150" y2="101.95070273324387" class="grid-line"/>
+  <text x="70" y="105.95070273324387" text-anchor="end" class="label">-3</text>
+  <line x1="80" y1="123.90140546648774" x2="1150" y2="123.90140546648774" class="grid-line"/>
+  <text x="70" y="127.90140546648774" text-anchor="end" class="label">-8</text>
+  <line x1="80" y1="145.85210819973162" x2="1150" y2="145.85210819973162" class="grid-line"/>
+  <text x="70" y="149.85210819973162" text-anchor="end" class="label">-13</text>
+  <line x1="80" y1="167.8028109329755" x2="1150" y2="167.8028109329755" class="grid-line"/>
+  <text x="70" y="171.8028109329755" text-anchor="end" class="label">-18</text>
+  <line x1="80" y1="189.75351366621936" x2="1150" y2="189.75351366621936" class="grid-line"/>
+  <text x="70" y="193.75351366621936" text-anchor="end" class="label">-23</text>
+  <line x1="80" y1="211.70421639946326" x2="1150" y2="211.70421639946326" class="grid-line"/>
+  <text x="70" y="215.70421639946326" text-anchor="end" class="label">-28</text>
+  <line x1="80" y1="233.65491913270714" x2="1150" y2="233.65491913270714" class="grid-line"/>
+  <text x="70" y="237.65491913270714" text-anchor="end" class="label">-33</text>
+  <line x1="80" y1="255.605621865951" x2="1150" y2="255.605621865951" class="grid-line"/>
+  <text x="70" y="259.605621865951" text-anchor="end" class="label">-38</text>
+  <line x1="80" y1="277.5563245991949" x2="1150" y2="277.5563245991949" class="grid-line"/>
+  <text x="70" y="281.5563245991949" text-anchor="end" class="label">-43</text>
+  <line x1="80" y1="299.5070273324387" x2="1150" y2="299.5070273324387" class="grid-line"/>
+  <text x="70" y="303.5070273324387" text-anchor="end" class="label">-48</text>
+  <line x1="80" y1="321.45773006568265" x2="1150" y2="321.45773006568265" class="grid-line"/>
+  <text x="70" y="325.45773006568265" text-anchor="end" class="label">-53</text>
+  <line x1="80" y1="343.4084327989265" x2="1150" y2="343.4084327989265" class="grid-line"/>
+  <text x="70" y="347.4084327989265" text-anchor="end" class="label">-58</text>
+  <line x1="80" y1="365.3591355321704" x2="1150" y2="365.3591355321704" class="grid-line"/>
+  <text x="70" y="369.3591355321704" text-anchor="end" class="label">-63</text>
+  <line x1="80" y1="387.30983826541427" x2="1150" y2="387.30983826541427" class="grid-line"/>
+  <text x="70" y="391.30983826541427" text-anchor="end" class="label">-68</text>
+  <line x1="80" y1="409.26054099865814" x2="1150" y2="409.26054099865814" class="grid-line"/>
+  <text x="70" y="413.26054099865814" text-anchor="end" class="label">-73</text>
+  <line x1="80" y1="431.211243731902" x2="1150" y2="431.211243731902" class="grid-line"/>
+  <text x="70" y="435.211243731902" text-anchor="end" class="label">-78</text>
+  <line x1="80" y1="88.78028109329755" x2="1150" y2="88.78028109329755" class="zero-line"/>
   
   <!-- Axes -->
-  <line x1="80" y1="100" x2="80" y2="620" class="axis-line"/>
-  <line x1="80" y1="620" x2="1150" y2="620" class="axis-line"/>
+  <line x1="80" y1="80" x2="80" y2="450" class="axis-line"/>
+  <line x1="80" y1="450" x2="1150" y2="450" class="axis-line"/>
   
   <!-- Axis labels -->
-  <text x="600.0" y="670" text-anchor="middle" class="axis-label">Baseline Accuracy (%)</text>
-  <text x="30" y="350.0" text-anchor="middle" class="axis-label" transform="rotate(-90, 30, 350.0)">Accuracy After Intervention (%)</text>
+  <text x="600.0" y="580" text-anchor="middle" class="axis-label">Models</text>
+  <text x="30" y="300.0" text-anchor="middle" class="axis-label" transform="rotate(-90, 30, 300.0)">Accuracy Drop (%)</text>
   
-  <line x1="80.0" y1="620.0" x2="1150.0" y2="100.0" class="diagonal"/>
+  <!-- Bars -->
+  <rect x="92.34615384615384" y="88.78028109329755" width="57.61538461538461" height="314.1041033971326" class="bar">
+    <title>Grok 4: -71.5% drop</title>
+  </rect>
+  <line x1="121.15384615384615" y1="215.7085964233619" x2="121.15384615384615" y2="590.0601725574984" class="error-bar"/>
+  <line x1="112.51153846153845" y1="215.7085964233619" x2="129.79615384615383" y2="215.7085964233619" class="error-bar"/>
+  <line x1="112.51153846153845" y1="590.0601725574984" x2="129.79615384615383" y2="590.0601725574984" class="error-bar"/>
+  <text x="121.15384615384615" y="417.88438449043014" text-anchor="middle" class="value-label">-71.5</text>
+  <text x="121.15384615384615" y="465" text-anchor="end" class="label" transform="rotate(-45, 121.15384615384615, 465)">Grok 4</text>
+  <rect x="174.65384615384616" y="88.78028109329755" width="57.61538461538461" height="192.17317607175647" class="bar">
+    <title>Claude Sonnet 4: -43.8% drop</title>
+  </rect>
+  <line x1="203.46153846153845" y1="183.72469093828903" x2="203.46153846153845" y2="378.18222339181915" class="error-bar"/>
+  <line x1="194.81923076923076" y1="183.72469093828903" x2="212.10384615384615" y2="183.72469093828903" class="error-bar"/>
+  <line x1="194.81923076923076" y1="378.18222339181915" x2="212.10384615384615" y2="378.18222339181915" class="error-bar"/>
+  <text x="203.46153846153845" y="295.95345716505403" text-anchor="middle" class="value-label">-43.8</text>
+  <text x="203.46153846153845" y="465" text-anchor="end" class="label" transform="rotate(-45, 203.46153846153845, 465)">Claude Sonnet 4</text>
+  <rect x="256.96153846153845" y="88.78028109329755" width="57.61538461538461" height="116.4432516420651" class="bar">
+    <title>Claude Sonnet 4.5: -26.5% drop</title>
+  </rect>
+  <line x1="285.7692307692308" y1="121.99485792886708" x2="285.7692307692308" y2="288.45220754185823" class="error-bar"/>
+  <line x1="277.1269230769231" y1="121.99485792886708" x2="294.41153846153844" y2="121.99485792886708" class="error-bar"/>
+  <line x1="277.1269230769231" y1="288.45220754185823" x2="294.41153846153844" y2="288.45220754185823" class="error-bar"/>
+  <text x="285.7692307692308" y="220.22353273536265" text-anchor="middle" class="value-label">-26.5</text>
+  <text x="285.7692307692308" y="465" text-anchor="end" class="label" transform="rotate(-45, 285.7692307692308, 465)">Claude Sonnet 4.5</text>
+  <rect x="339.2692307692308" y="88.78028109329755" width="57.61538461538461" height="103.74320220354544" class="bar">
+    <title>Qwen2.5 72B Turbo: -23.6% drop</title>
+  </rect>
+  <line x1="368.0769230769231" y1="105.17881841579474" x2="368.0769230769231" y2="279.86814817789127" class="error-bar"/>
+  <line x1="359.4346153846154" y1="105.17881841579474" x2="376.71923076923076" y2="105.17881841579474" class="error-bar"/>
+  <line x1="359.4346153846154" y1="279.86814817789127" x2="376.71923076923076" y2="279.86814817789127" class="error-bar"/>
+  <text x="368.0769230769231" y="207.52348329684298" text-anchor="middle" class="value-label">-23.6</text>
+  <text x="368.0769230769231" y="465" text-anchor="end" class="label" transform="rotate(-45, 368.0769230769231, 465)">Qwen2.5 72B Turbo</text>
+  <rect x="421.5769230769231" y="88.78028109329755" width="57.61538461538461" height="85.50321350377853" class="bar">
+    <title>GPT-4o: -19.5% drop</title>
+  </rect>
+  <line x1="450.3846153846154" y1="61.75866405861163" x2="450.3846153846154" y2="286.8083251355405" class="error-bar"/>
+  <line x1="441.74230769230775" y1="61.75866405861163" x2="459.0269230769231" y2="61.75866405861163" class="error-bar"/>
+  <line x1="441.74230769230775" y1="286.8083251355405" x2="459.0269230769231" y2="286.8083251355405" class="error-bar"/>
+  <text x="450.3846153846154" y="189.28349459707607" text-anchor="middle" class="value-label">-19.5</text>
+  <text x="450.3846153846154" y="465" text-anchor="end" class="label" transform="rotate(-45, 450.3846153846154, 465)">GPT-4o</text>
+  <rect x="503.8846153846154" y="88.78028109329755" width="57.61538461538461" height="67.83812416131083" class="bar">
+    <title>MedGemma 27B: -15.5% drop</title>
+  </rect>
+  <line x1="532.6923076923077" y1="70.85159671537484" x2="532.6923076923077" y2="242.38521379384187" class="error-bar"/>
+  <line x1="524.0500000000001" y1="70.85159671537484" x2="541.3346153846154" y2="70.85159671537484" class="error-bar"/>
+  <line x1="524.0500000000001" y1="242.38521379384187" x2="541.3346153846154" y2="242.38521379384187" class="error-bar"/>
+  <text x="532.6923076923077" y="171.61840525460838" text-anchor="middle" class="value-label">-15.5</text>
+  <text x="532.6923076923077" y="465" text-anchor="end" class="label" transform="rotate(-45, 532.6923076923077, 465)">MedGemma 27B</text>
+  <rect x="586.1923076923076" y="88.78028109329755" width="57.61538461538461" height="62.08913058831841" class="bar">
+    <title>MedGemma 4B: -14.1% drop</title>
+  </rect>
+  <line x1="614.9999999999999" y1="82.30287536260889" x2="614.9999999999999" y2="219.43594800062306" class="error-bar"/>
+  <line x1="606.3576923076922" y1="82.30287536260889" x2="623.6423076923076" y2="82.30287536260889" class="error-bar"/>
+  <line x1="606.3576923076922" y1="219.43594800062306" x2="623.6423076923076" y2="219.43594800062306" class="error-bar"/>
+  <text x="614.9999999999999" y="165.86941168161596" text-anchor="middle" class="value-label">-14.1</text>
+  <text x="614.9999999999999" y="465" text-anchor="end" class="label" transform="rotate(-45, 614.9999999999999, 465)">MedGemma 4B</text>
+  <rect x="668.5" y="88.78028109329755" width="57.61538461538461" height="45.52157638251286" class="bar">
+    <title>Gemini 2.5 Flash: -10.4% drop</title>
+  </rect>
+  <line x1="697.3076923076923" y1="78.17089990463873" x2="697.3076923076923" y2="190.43281504698209" class="error-bar"/>
+  <line x1="688.6653846153846" y1="78.17089990463873" x2="705.9499999999999" y2="78.17089990463873" class="error-bar"/>
+  <line x1="688.6653846153846" y1="190.43281504698209" x2="705.9499999999999" y2="190.43281504698209" class="error-bar"/>
+  <text x="697.3076923076923" y="149.3018574758104" text-anchor="middle" class="value-label">-10.4</text>
+  <text x="697.3076923076923" y="465" text-anchor="end" class="label" transform="rotate(-45, 697.3076923076923, 465)">Gemini 2.5 Flash</text>
+  <rect x="750.8076923076923" y="88.78028109329755" width="57.61538461538461" height="25.818207500529653" class="bar">
+    <title>Grok 4 Fast: -5.9% drop</title>
+  </rect>
+  <line x1="779.6153846153845" y1="59.13382608926917" x2="779.6153846153845" y2="170.06315109838525" class="error-bar"/>
+  <line x1="770.9730769230769" y1="59.13382608926917" x2="788.2576923076922" y2="59.13382608926917" class="error-bar"/>
+  <line x1="770.9730769230769" y1="170.06315109838525" x2="788.2576923076922" y2="170.06315109838525" class="error-bar"/>
+  <text x="779.6153846153845" y="129.5984885938272" text-anchor="middle" class="value-label">-5.9</text>
+  <text x="779.6153846153845" y="465" text-anchor="end" class="label" transform="rotate(-45, 779.6153846153845, 465)">Grok 4 Fast</text>
+  <rect x="833.1153846153845" y="88.78028109329755" width="57.61538461538461" height="4.912776326011723" class="bar">
+    <title>GPT-5 mini (high): -1.1% drop</title>
+  </rect>
+  <line x1="861.9230769230768" y1="86.94477905515302" x2="861.9230769230768" y2="100.44133578346552" class="error-bar"/>
+  <line x1="853.2807692307691" y1="86.94477905515302" x2="870.5653846153845" y2="86.94477905515302" class="error-bar"/>
+  <line x1="853.2807692307691" y1="100.44133578346552" x2="870.5653846153845" y2="100.44133578346552" class="error-bar"/>
+  <text x="861.9230769230768" y="108.69305741930927" text-anchor="middle" class="value-label">-1.1</text>
+  <text x="861.9230769230768" y="465" text-anchor="end" class="label" transform="rotate(-45, 861.9230769230768, 465)">GPT-5 mini (high)</text>
+  <rect x="915.4230769230769" y="88.78028109329755" width="57.61538461538461" height="0.3658450455540674" class="bar">
+    <title>GPT-5: -0.1% drop</title>
+  </rect>
+  <line x1="944.2307692307692" y1="86.77633160644721" x2="944.2307692307692" y2="91.515920671256" class="error-bar"/>
+  <line x1="935.5884615384615" y1="86.77633160644721" x2="952.8730769230768" y2="86.77633160644721" class="error-bar"/>
+  <line x1="935.5884615384615" y1="91.515920671256" x2="952.8730769230768" y2="91.515920671256" class="error-bar"/>
+  <text x="944.2307692307692" y="104.14612613885161" text-anchor="middle" class="value-label">-0.1</text>
+  <text x="944.2307692307692" y="465" text-anchor="end" class="label" transform="rotate(-45, 944.2307692307692, 465)">GPT-5</text>
+  <rect x="997.7307692307692" y="88.78028109329755" width="57.61538461538461" height="0.10452715587256023" class="bar">
+    <title>GPT-OSS 120B: -0.0% drop</title>
+  </rect>
+  <line x1="1026.5384615384614" y1="84.02040338272946" x2="1026.5384615384614" y2="93.74921311561076" class="error-bar"/>
+  <line x1="1017.8961538461538" y1="84.02040338272946" x2="1035.180769230769" y2="84.02040338272946" class="error-bar"/>
+  <line x1="1017.8961538461538" y1="93.74921311561076" x2="1035.180769230769" y2="93.74921311561076" class="error-bar"/>
+  <text x="1026.5384615384614" y="103.8848082491701" text-anchor="middle" class="value-label">-0.0</text>
+  <text x="1026.5384615384614" y="465" text-anchor="end" class="label" transform="rotate(-45, 1026.5384615384614, 465)">GPT-OSS 120B</text>
+  <rect x="1080.0384615384614" y="88.78028109329755" width="57.61538461538461" height="0.0" class="bar">
+    <title>GPT-5 mini (low): 0.0% drop</title>
+  </rect>
+  <text x="1108.8461538461538" y="103.78028109329755" text-anchor="middle" class="value-label">0.0</text>
+  <text x="1108.8461538461538" y="465" text-anchor="end" class="label" transform="rotate(-45, 1108.8461538461538, 465)">GPT-5 mini (low)</text>
   
-  <!-- Data points -->
-  <circle cx="1105.1619047619047" cy="241.11190476190473" r="8" fill="#FF6B6B" class="point">
-    <title>GPT-5: 95.8% → 72.9% (drop: 22.9%)</title>
-  </circle>
-  <text x="1105.1619047619047" y="229.11190476190473" text-anchor="middle" class="label" fill="#FF6B6B" font-weight="500">GPT-5</text>
-  <circle cx="1091.9142857142856" cy="500.2761904761905" r="8" fill="#4ECDC4" class="point">
-    <title>Grok 4: 94.6% → 23.0% (drop: 71.5%)</title>
-  </circle>
-  <text x="1091.9142857142856" y="488.2761904761905" text-anchor="middle" class="label" fill="#4ECDC4" font-weight="500">Grok 4</text>
-  <circle cx="1084.7809523809524" cy="269.61904761904765" r="8" fill="#45B7D1" class="point">
-    <title>Claude Sonnet 4.5: 93.9% → 67.4% (drop: 26.5%)</title>
-  </circle>
-  <text x="1084.7809523809524" y="257.61904761904765" text-anchor="middle" class="label" fill="#45B7D1" font-weight="500">Claude Sonnet 4.5</text>
-  <circle cx="1083.7619047619048" cy="249.00476190476184" r="8" fill="#FFA07A" class="point">
-    <title>GPT-5 mini: 93.8% → 71.3% (drop: 22.5%)</title>
-  </circle>
-  <text x="1083.7619047619048" y="237.00476190476184" text-anchor="middle" class="label" fill="#FFA07A" font-weight="500">GPT-5 mini</text>
-  <circle cx="1071.5333333333333" cy="192.05238095238093" r="8" fill="#98D8C8" class="point">
-    <title>Gemini 2.5 Flash: 92.7% → 82.3% (drop: 10.4%)</title>
-  </circle>
-  <text x="1071.5333333333333" y="180.05238095238093" text-anchor="middle" class="label" fill="#98D8C8" font-weight="500">Gemini 2.5 Flash</text>
-  <circle cx="1069.4952380952382" cy="366.7476190476191" r="8" fill="#F7DC6F" class="point">
-    <title>Claude Sonnet 4: 92.5% → 48.7% (drop: 43.8%)</title>
-  </circle>
-  <text x="1069.4952380952382" y="354.7476190476191" text-anchor="middle" class="label" fill="#F7DC6F" font-weight="500">Claude Sonnet 4</text>
-  <circle cx="1052.1714285714286" cy="248.81904761904764" r="8" fill="#BB8FCE" class="point">
-    <title>GPT-4o: 90.9% → 71.4% (drop: 19.5%)</title>
-  </circle>
-  <text x="1052.1714285714286" y="236.81904761904764" text-anchor="middle" class="label" fill="#BB8FCE" font-weight="500">GPT-4o</text>
-  <circle cx="1051.152380952381" cy="247.95238095238096" r="8" fill="#85C1E2" class="point">
-    <title>GPT-4o (copy): 90.8% → 71.5% (drop: 19.2%)</title>
-  </circle>
-  <text x="1051.152380952381" y="235.95238095238096" text-anchor="middle" class="label" fill="#85C1E2" font-weight="500">GPT-4o (copy)</text>
-  <circle cx="1050.1333333333332" cy="148.6571428571429" r="8" fill="#F8B739" class="point">
-    <title>GPT-OSS 120B: 90.7% → 90.6% (drop: 0.0%)</title>
-  </circle>
-  <text x="1050.1333333333332" y="136.6571428571429" text-anchor="middle" class="label" fill="#F8B739" font-weight="500">GPT-OSS 120B</text>
-  <circle cx="1005.2952380952379" cy="200.90476190476187" r="8" fill="#52B788" class="point">
-    <title>Grok 4 Fast: 86.5% → 80.6% (drop: 5.9%)</title>
-  </circle>
-  <text x="1005.2952380952379" y="188.90476190476187" text-anchor="middle" class="label" fill="#52B788" font-weight="500">Grok 4 Fast</text>
-  <circle cx="940.0761904761904" cy="324.9" r="8" fill="#E76F51" class="point">
-    <title>Qwen2.5 72B Turbo: 80.4% → 56.8% (drop: 23.6%)</title>
-  </circle>
-  <text x="940.0761904761904" y="312.9" text-anchor="middle" class="label" fill="#E76F51" font-weight="500">Qwen2.5 72B Turbo</text>
-  <circle cx="787.2190476190477" cy="349.847619047619" r="8" fill="#2A9D8F" class="point">
-    <title>MedGemma 4B: 66.1% → 52.0% (drop: 14.1%)</title>
-  </circle>
-  <text x="787.2190476190477" y="337.847619047619" text-anchor="middle" class="label" fill="#2A9D8F" font-weight="500">MedGemma 4B</text>
+  <!-- Caption -->
+  <text x="600.0" y="595" text-anchor="middle" class="caption">
+    Bars hang downward showing negative accuracy change. Error bars show std dev across 8 interventions. Reasoning parameters mentioned when used.
+  </text>
 </svg>

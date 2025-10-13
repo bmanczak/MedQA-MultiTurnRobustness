@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Interactive visualization showing performance drops of medical LLMs under multi-turn interventions"
+      content="Interactive visualization of medical LLM performance drops"
     />
-    <title>MedQA Deep Robustness - Interactive Results</title>
+    <title>MedQA Deep Robustness - Results</title>
     <style>
       * {
         margin: 0;
@@ -67,11 +67,6 @@
       .instructions p {
         color: #555;
         line-height: 1.6;
-        margin-bottom: 0.5rem;
-      }
-
-      .instructions strong {
-        color: #2c3e50;
       }
 
       .chart-container {
@@ -87,7 +82,7 @@
 
       iframe {
         width: 100%;
-        height: 850px;
+        height: 700px;
         border: none;
         border-radius: 8px;
       }
@@ -102,12 +97,8 @@
           font-size: 1.5rem;
         }
 
-        .instructions {
-          padding: 1rem;
-        }
-
         iframe {
-          height: 600px;
+          height: 500px;
         }
       }
     </style>
@@ -115,7 +106,7 @@
   <body>
     <header class="header">
       <div class="header-content">
-        <h1>MedQA Deep Robustness: Interactive Results</h1>
+        <h1>MedQA Deep Robustness: Results</h1>
         <a
           href="https://github.com/donttrustmedicalais/medqa_deep_robustness"
           class="back-link"
@@ -126,21 +117,13 @@
 
     <div class="instructions">
       <p>
-        <strong>How to use:</strong> Hover over points to see details • Use the
-        dropdown menu to filter by intervention type • Drag to zoom •
-        Double-click to reset view
-      </p>
-      <p>
-        Points below the diagonal line indicate performance drops. The default
-        view shows average performance across 8 different interventions.
+        <strong>Interactive chart:</strong> Use the dropdown menu to select
+        different intervention types • Hover bars for details
       </p>
     </div>
 
     <div class="chart-container">
-      <iframe
-        src="chart.html"
-        title="Interactive performance chart showing model accuracy before and after interventions"
-      ></iframe>
+      <iframe src="chart.html" title="Model performance drop chart"></iframe>
     </div>
   </body>
 </html>
