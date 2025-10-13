@@ -39,6 +39,18 @@ class LitellmModel:
         return convo
 
     def batch_call(self, prompts: Iterable[str | Sequence[str]], system_prompt: str = "") -> List[str]:
+        """Batch-generate model outputs for prompts.
+
+        Args:
+            prompts: An iterable of prompts; each prompt is a string or an alternating user/assistant sequence.
+            system_prompt: Optional system message prepended to each conversation.
+
+        Returns:
+            A list of generated strings, one per input prompt, in order.
+
+        Raises:
+            RuntimeError: Internally raised to trigger a retry when the provider returns empty text for any item.
+        """
         prepared = [self._format_message(p, system_prompt) for p in list(prompts)]
         outputs: List[str] = []
 
@@ -63,6 +75,9 @@ class LitellmModel:
                         parsed = list(parsed)
                     if len(parsed) != len(batch):
                         raise RuntimeError("Unexpected number of responses from LiteLLM")
+                    # Retry if any generation is empty/whitespace or not a string
+                    if any((not isinstance(x, str)) or (not x.strip()) for x in parsed):
+                        raise RuntimeError("Empty generation(s) in batch")
                     outputs.extend(parsed)
                     break
                 except Exception as exc:  # noqa: BLE001
