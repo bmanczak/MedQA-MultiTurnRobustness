@@ -69,9 +69,46 @@ def _load_followup_templates(root: Path, filename: str):
         with resources.as_file(resource) as packaged_path:
             return load_followup_templates(Path(packaged_path))
     except FileNotFoundError as exc:
-        raise FileNotFoundError(
-            f"Followups file '{filename}' not found in working directory or package data"
-        ) from exc
+        raise FileNotFoundError(f"Followups file '{filename}' not found in working directory or package data") from exc
+
+
+def _backfill_empty_base(
+    rows: List[Dict],
+    empty_ids: List[int],
+    base_cache: Dict[int, Dict],
+    cfg: DictConfig,
+    system_prompt: str,
+    model,
+) -> None:
+    """Try to re-generate base responses for rows with empty outputs.
+
+    Runs up to two small-batch attempts and updates base_cache in-place.
+    The caller is responsible for validating that no empties remain.
+    """
+    if not empty_ids:
+        return
+    max_attempts = 2
+    for _ in range(max_attempts):
+        pending = [i for i in empty_ids if str(base_cache.get(i, {}).get("response", "")).strip() == ""]
+        if not pending:
+            return
+        prompts = [
+            format_medqa_prompt(rows[idx], cfg.prompts.instruction_prefix, cfg.prompts.response_suffix)
+            for idx in pending
+        ]
+        generations = model.generate(prompts, system_prompt=system_prompt)
+        for idx, prompt, generation in zip(pending, prompts, generations):
+            row = rows[idx]
+            gold = str(row.get("answer_idx", "")).strip().upper()[:1]
+            evaluation = evaluate_generation(gold, generation)
+            base_cache[idx] = {
+                "id": idx,
+                "prompt": prompt,
+                "response": generation,
+                "gold": evaluation["gold"],
+                "pred": evaluation["pred"],
+                "correct": bool(evaluation["correct"]),
+            }
 
 
 def run_experiment(cfg: DictConfig) -> Path:
@@ -106,9 +143,7 @@ def run_experiment(cfg: DictConfig) -> Path:
     base_cache = {
         rec["id"]: rec
         for rec in base_existing
-        if isinstance(rec.get("id"), int)
-        and 0 <= rec["id"] < len(rows)
-        and str(rec.get("response", "")).strip() != ""
+        if isinstance(rec.get("id"), int) and 0 <= rec["id"] < len(rows) and str(rec.get("response", "")).strip() != ""
     }
     base_missing_ids = (
         list(range(len(rows))) if cfg.run.overwrite else [i for i in range(len(rows)) if i not in base_cache]
@@ -134,6 +169,18 @@ def run_experiment(cfg: DictConfig) -> Path:
                 "pred": evaluation["pred"],
                 "correct": bool(evaluation["correct"]),
             }
+
+    # Fail-fast backfill: ensure no empty base responses before followups
+    empty_base_ids = [i for i in range(len(rows)) if str(base_cache.get(i, {}).get("response", "")).strip() == ""]
+    if empty_base_ids:
+        if model is None:
+            model = build_model(cfg.model)
+        _backfill_empty_base(rows, empty_base_ids, base_cache, cfg, system_prompt, model)
+        empty_base_ids = [i for i in range(len(rows)) if str(base_cache.get(i, {}).get("response", "")).strip() == ""]
+        if empty_base_ids:
+            raise RuntimeError(
+                f"Base generation failed for rows {empty_base_ids} after backfill; aborting before followups."
+            )
 
     try:
         base_records = [base_cache[i] for i in range(len(rows))]
@@ -164,16 +211,12 @@ def run_experiment(cfg: DictConfig) -> Path:
             and str(rec.get("response", "")).strip() != ""
         }
         followup_caches[name] = cache
-        missing_ids = (
-            list(range(len(rows))) if cfg.run.overwrite else [i for i in range(len(rows)) if i not in cache]
-        )
+        missing_ids = list(range(len(rows))) if cfg.run.overwrite else [i for i in range(len(rows)) if i not in cache]
 
         if missing_ids:
             updated_followups.add(name)
             for idx in missing_ids:
                 base_rec = base_records[idx]
-                if str(base_rec.get("response", "")).strip() == "":
-                    continue
                 follow_prompt = template.render(rows[idx], base_rec.get("pred"))
                 conversation = [base_rec["prompt"], base_rec["response"], follow_prompt]
                 pending_prompts.append(conversation)
@@ -211,12 +254,20 @@ def run_experiment(cfg: DictConfig) -> Path:
 
         for name in updated_followups:
             cache = followup_caches[name]
-            try:
-                final_records = [cache[i] for i in range(len(rows))]
-            except KeyError as missing_idx:
-                raise RuntimeError(
-                    f"Missing cached followup '{name}' result for row {missing_idx}"
-                ) from missing_idx
+            # Ensure alignment: any ids not produced get explicit empty records
+            for i in range(len(rows)):
+                if i not in cache:
+                    base_rec = base_records[i]
+                    cache[i] = {
+                        "id": i,
+                        "followup": name,
+                        "prompt": "",
+                        "response": "",
+                        "gold": base_rec.get("gold", ""),
+                        "pred": "",
+                        "correct": False,
+                    }
+            final_records = [cache[i] for i in range(len(rows))]
             outfile = follow_dir / f"{name}.jsonl"
             write_jsonl(outfile, final_records)
             followup_outcomes[name] = final_records
@@ -244,10 +295,12 @@ def _print_summary(base_records: List[Dict], followup_outcomes: Dict[str, List[D
     ]
 
     for name, records in followup_outcomes.items():
-        n = len(records)
-        correct = sum(int(rec.get("correct", False)) for rec in records)
+        # Exclude API failures (empty responses) from statistics and n
+        filtered_records = [rec for rec in records if str(rec.get("response", "")).strip() != ""]
+        n = len(filtered_records)
+        correct = sum(int(rec.get("correct", False)) for rec in filtered_records)
         acc = correct / n if n else 0.0
-        flips = compute_flips(base_records, records)
+        flips = compute_flips(base_records, filtered_records)
         rows.append(
             [
                 name,
