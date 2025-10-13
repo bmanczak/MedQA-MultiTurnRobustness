@@ -40,10 +40,12 @@ def summarize(base_records: List[dict], followup_records: Dict[str, List[dict]],
     for name, records in sorted(followup_records.items()):
         if only and name not in only:
             continue
-        n = len(records)
-        correct = sum(int(rec.get("correct", False)) for rec in records)
+        # Exclude API failures (empty responses) from statistics and n
+        filtered_records = [rec for rec in records if str(rec.get("response", "")).strip() != ""]
+        n = len(filtered_records)
+        correct = sum(int(rec.get("correct", False)) for rec in filtered_records)
         acc = correct / n if n else 0.0
-        flips = compute_flips(base_records, records)
+        flips = compute_flips(base_records, filtered_records)
         rows.append(
             [
                 name,
