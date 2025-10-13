@@ -20,8 +20,8 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
         data: Performance data
         output_path: Output SVG path
     """
-    # Filter out Grok 4 (incomplete results)
-    data = [d for d in data if "grok" not in d["model_name"].lower()]
+    # Filter out Grok 4 (incomplete results), but allow Grok 4 Fast
+    # Note: Grok 4 (grok-4-0709) is already filtered in process_results_directory
 
     # Compute statistics per model
     model_stats = {}
@@ -78,10 +78,10 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
         "      .bar { fill: rgba(231, 111, 81, 0.1); stroke: #E76F51; stroke-width: 2.5; }",
         "      .error-bar { stroke: #2C3E50; stroke-width: 1.5; }",
         "      .label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #2C3E50; }",
-        "      .value-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #2C3E50; font-weight: 500; }",
+        "      .value-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; fill: #2C3E50; font-weight: 500; }",
         "      .axis-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; fill: #2C3E50; }",
         "      .title { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 20px; fill: #2C3E50; font-weight: 600; }",
-        "      .caption { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 9px; fill: #666; }",
+        "      .caption { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #7f8c8d; font-style: italic; }",
         "    </style>",
         "  </defs>",
         "  ",
@@ -114,7 +114,6 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
             f'  <line x1="{margin["left"]}" y1="{height - margin["bottom"]}" x2="{width - margin["right"]}" y2="{height - margin["bottom"]}" class="axis-line"/>',
             "  ",
             "  <!-- Axis labels -->",
-            f'  <text x="{width/2}" y="{height - 20}" text-anchor="middle" class="axis-label">Models</text>',
             f'  <text x="{30}" y="{height/2}" text-anchor="middle" class="axis-label" transform="rotate(-90, 30, {height/2})">Accuracy Drop (%)</text>',
             "  ",
             "  <!-- Bars -->",
@@ -130,33 +129,18 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
 
         # Bar (hanging downward from 0)
         svg_parts.append(f'  <rect x="{x}" y="{bar_top_y}" width="{bar_width}" height="{bar_height}" class="bar">')
-        svg_parts.append(f'    <title>{record["model"]}: {record["drop"]:.1f}% drop</title>')
+        svg_parts.append(f'    <title>{record["model"]}: {record["drop"]:.1f}% drop (±{record["std"]:.1f}%)</title>')
         svg_parts.append("  </rect>")
 
-        # Error bars (standard deviation)
-        if record["std"] > 0:
-            err_top_y = scale_y(record["drop"] + record["std"])
-            err_bottom_y = scale_y(record["drop"] - record["std"])
-            bar_center_x = x + bar_width / 2
-            cap_width = bar_width * 0.3
-
-            # Vertical line
-            svg_parts.append(
-                f'  <line x1="{bar_center_x}" y1="{err_top_y}" x2="{bar_center_x}" y2="{err_bottom_y}" class="error-bar"/>'
-            )
-            # Top cap
-            svg_parts.append(
-                f'  <line x1="{bar_center_x - cap_width/2}" y1="{err_top_y}" x2="{bar_center_x + cap_width/2}" y2="{err_top_y}" class="error-bar"/>'
-            )
-            # Bottom cap
-            svg_parts.append(
-                f'  <line x1="{bar_center_x - cap_width/2}" y1="{err_bottom_y}" x2="{bar_center_x + cap_width/2}" y2="{err_bottom_y}" class="error-bar"/>'
-            )
-
-        # Value label (inside bar near bottom, avoiding SE bar overlap)
-        label_y = bar_bottom_y - 5  # Position inside bar, slightly above the bottom
+        # Value labels stacked (drop on top, std below)
+        label_x = x + bar_width / 2
+        label_y_drop = bar_bottom_y - 18  # Position for drop value
+        label_y_std = bar_bottom_y - 4  # Position for std value (below drop)
         svg_parts.append(
-            f'  <text x="{x + bar_width/2}" y="{label_y}" text-anchor="middle" class="value-label">{record["drop"]:.1f}</text>'
+            f'  <text x="{label_x}" y="{label_y_drop}" text-anchor="middle" class="value-label">{record["drop"]:.1f}</text>'
+        )
+        svg_parts.append(
+            f'  <text x="{label_x}" y="{label_y_std}" text-anchor="middle" class="value-label" font-size="11">(±{record["std"]:.1f})</text>'
         )
 
         # Model name label (rotated)
@@ -166,20 +150,20 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
             f'  <text x="{label_x}" y="{label_y_pos}" text-anchor="end" class="label" transform="rotate(-45, {label_x}, {label_y_pos})">{record["model"]}</text>'
         )
 
-    # Caption
-    caption_y_start = height - 45
+    # Caption (gray italic style)
+    caption_y_start = height - 40
     svg_parts.extend(
         [
             "  ",
             "  <!-- Caption -->",
-            f'  <text x="{width/2}" y="{caption_y_start}" text-anchor="middle" class="title">',
+            f'  <text x="{width/2}" y="{caption_y_start}" text-anchor="middle" class="caption">',
             "    The performance of all state-of-the-art models on MedQA-MultiTurnRobustness drops.",
             "  </text>",
-            f'  <text x="{width/2}" y="{caption_y_start + 18}" text-anchor="middle" class="caption">',
-            "    See the paper for the factors that impact the performance drops in more depth.",
+            f'  <text x="{width/2}" y="{caption_y_start + 16}" text-anchor="middle" class="caption">',
+            "    See the paper for the factors that impact the performance drops in more depth. Bars hang downward showing negative accuracy change.",
             "  </text>",
-            f'  <text x="{width/2}" y="{caption_y_start + 32}" text-anchor="middle" class="caption">',
-            "    Bars hang downward showing negative accuracy change. Error bars show std dev across 8 interventions. Reasoning parameters mentioned when used.",
+            f'  <text x="{width/2}" y="{caption_y_start + 30}" text-anchor="middle" class="caption">',
+            "    Values show mean ± std dev across 8 interventions. Reasoning parameters mentioned when used.",
             "  </text>",
         ]
     )

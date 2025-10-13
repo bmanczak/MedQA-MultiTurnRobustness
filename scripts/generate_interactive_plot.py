@@ -51,7 +51,8 @@ MODEL_SHORT_NAMES = {
     "together_ai_openai_gpt-oss-20b": "GPT-OSS 20B",
     "together_ai_Qwen_Qwen2.5-72B-Instruct": "Qwen2.5 72B",
     "together_ai_Qwen_Qwen2.5-72B-Instruct-Turbo": "Qwen2.5 72B Turbo",
-    # Grok 4 excluded (incomplete results)
+    "xai_grok-4-fast-non-reasoning": "Grok 4 Fast",
+    # Grok 4 (grok-4-0709) excluded (incomplete results)
 }
 
 
@@ -190,8 +191,8 @@ def process_results_directory(results_dir: Path) -> List[Dict]:
 
         model_id = extract_model_name(model_dir.name)
 
-        # Skip Grok 4 (incomplete results)
-        if "grok" in model_id.lower():
+        # Skip Grok 4 (incomplete results), but allow Grok 4 Fast
+        if "grok-4-0709" in model_id.lower():
             continue
         first_turn_path = model_dir / "first_turn.jsonl"
 
@@ -283,28 +284,21 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
         go.Bar(
             x=[s["model"] for s in avg_stats],
             y=[s["drop"] for s in avg_stats],
-            error_y=dict(
-                type="data",
-                array=[s["std"] for s in avg_stats],
-                visible=True,
-                thickness=1.5,
-                width=4,
-            ),
-            text=[f"{s['drop']:.1f}" for s in avg_stats],
-            textposition="inside",  # Position text inside bar to avoid SE bar overlap
-            textfont=dict(size=10),
+            text=[f"{s['drop']:.1f}<br>(±{s['std']:.1f})" for s in avg_stats],
+            textposition="inside",  # Position text inside bar, stacked
+            textfont=dict(size=12),
             marker=dict(
                 color="rgba(231, 111, 81, 0.1)",  # Very light fill
                 line=dict(color="#E76F51", width=2.5),  # Thick border
             ),
             name="Average",
             visible=True,
-            customdata=[[s["flip_rate"]] for s in avg_stats],
+            customdata=[[s["std"], s["flip_rate"]] for s in avg_stats],
             hovertemplate=(
                 "<b>%{x}</b><br>"
                 "Average Drop: %{y:.1f}%<br>"
-                "Std Dev: %{error_y.array:.1f}%<br>"
-                "Avg Flip Rate: %{customdata[0]:.1f}%<br>"
+                "Std Dev: %{customdata[0]:.1f}%<br>"
+                "Avg Flip Rate: %{customdata[1]:.1f}%<br>"
                 "<extra></extra>"
             ),
         )
@@ -321,7 +315,7 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 y=[d["drop"] for d in followup_data],
                 text=[f"{d['drop']:.1f}" for d in followup_data],
                 textposition="inside",  # Position text inside bar
-                textfont=dict(size=10),
+                textfont=dict(size=12),
                 marker=dict(
                     color="rgba(231, 111, 81, 0.1)",
                     line=dict(color="#E76F51", width=2.5),
@@ -373,7 +367,7 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
     # Update layout with inverted y-axis (no title, will be in caption)
     fig.update_layout(
         xaxis={
-            "title": "Models",
+            "title": "",  # No x-axis label
             "tickangle": -45,
             "title_font": {"size": 14},
         },
@@ -406,24 +400,23 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
         ],
         width=1200,
         height=600,
-        margin=dict(l=80, r=50, t=80, b=180),  # Reduced top margin, increased bottom for caption
+        margin=dict(l=80, r=50, t=80, b=160),  # Reduced top margin, adjusted bottom for caption
         annotations=[
             dict(
                 text=(
-                    "<b>The performance of all state-of-the-art models on MedQA-MultiTurnRobustness drops.</b><br>"
-                    "See the <a href='#'>paper</a> for the factors that impact the performance drops in more depth.<br>"
-                    "<br>"
-                    "<i>Bars hang downward showing negative accuracy change. Error bars show standard deviation across 8 interventions. "
-                    "Reasoning/thinking parameters are explicitly mentioned when used (e.g., 'low', 'high'). Hover for flip rates.</i>"
+                    "The performance of all state-of-the-art models on MedQA-MultiTurnRobustness drops.<br>"
+                    "See the <a href='https://bmanczak.github.io/medqa_deep_robustness/'>paper</a> for the factors that impact the performance drops in more depth. "
+                    "Bars hang downward showing negative accuracy change. Values show mean ± std dev across 8 interventions. "
+                    "Reasoning/thinking parameters are explicitly mentioned when used (e.g., 'low', 'high'). Hover for flip rates."
                 ),
                 showarrow=False,
                 xref="paper",
                 yref="paper",
                 x=0.5,
-                y=-0.28,
+                y=-0.25,
                 xanchor="center",
                 yanchor="top",
-                font=dict(size=10, color="#2C3E50"),
+                font=dict(size=11, color="#7f8c8d"),  # Gray italic style
                 align="center",
             )
         ],
