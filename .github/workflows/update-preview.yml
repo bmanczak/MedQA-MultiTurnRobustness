@@ -2,11 +2,11 @@ name: Update Preview Image
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
     paths:
-      - 'results/**'
-      - 'scripts/generate_svg_preview.py'
-      - 'scripts/generate_interactive_plot.py'
+      - "results/**"
+      - "scripts/generate_svg_preview.py"
+      - "scripts/generate_interactive_plot.py"
   workflow_dispatch:
 
 permissions:
@@ -23,11 +23,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
-          pip install plotly
+          pip install plotly pyyaml
 
       - name: Generate visualizations
         run: |
@@ -41,4 +41,3 @@ jobs:
           git add docs/
           git diff --staged --quiet || git commit -m "Update interactive visualization and preview image"
           git push
-
