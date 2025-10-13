@@ -157,6 +157,7 @@ def build_litellm_config(model_cfg) -> LiteLLMConfig:
     lowered = model_id.lower()
     is_gpt5 = "gpt-5" in lowered
     is_anthropic = lowered.startswith("anthropic/") or "claude" in lowered
+    is_gemini = lowered.startswith("gemini/") or "gemini-" in lowered
 
     temperature = model_cfg.temperature
     max_tokens = model_cfg.max_tokens
@@ -177,6 +178,12 @@ def build_litellm_config(model_cfg) -> LiteLLMConfig:
                 max_tokens = budget + 256
         except Exception:  # noqa: BLE001
             pass
+
+    # Gemini models: disable thinking mode for flash variants
+    if is_gemini:
+        if "gemini-2.5-flash" in lowered or "gemini-2.0-flash" in lowered:
+            if "thinking" not in extra:
+                extra["thinking"] = {"type": "disabled", "budget_tokens": 0}
 
     generate_kwargs = {"temperature": temperature, "max_tokens": max_tokens}
     generate_kwargs.update(extra)
