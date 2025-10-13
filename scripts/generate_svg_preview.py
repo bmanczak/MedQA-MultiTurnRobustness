@@ -20,6 +20,9 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
         data: Performance data
         output_path: Output SVG path
     """
+    # Filter out Grok 4 (incomplete results)
+    data = [d for d in data if "grok" not in d["model_name"].lower()]
+    
     # Compute statistics per model
     model_stats = {}
     for record in data:
@@ -84,11 +87,6 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
         "  ",
         "  <!-- Background -->",
         '  <rect width="100%" height="100%" fill="white"/>',
-        "  ",
-        "  <!-- Title -->",
-        f'  <text x="{width/2}" y="50" text-anchor="middle" class="title">',
-        "    Accuracy Drop: Average Across 8 Interventions",
-        "  </text>",
         "  ",
         "  <!-- Grid lines -->",
     ]
@@ -155,8 +153,8 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
                 f'  <line x1="{bar_center_x - cap_width/2}" y1="{err_bottom_y}" x2="{bar_center_x + cap_width/2}" y2="{err_bottom_y}" class="error-bar"/>'
             )
 
-        # Value label (below bar, since bars hang down)
-        label_y = bar_bottom_y + 15
+        # Value label (inside bar near bottom, avoiding SE bar overlap)
+        label_y = bar_bottom_y - 5  # Position inside bar, slightly above the bottom
         svg_parts.append(
             f'  <text x="{x + bar_width/2}" y="{label_y}" text-anchor="middle" class="value-label">{record["drop"]:.1f}</text>'
         )
@@ -169,11 +167,18 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
         )
 
     # Caption
+    caption_y_start = height - 45
     svg_parts.extend(
         [
             "  ",
             "  <!-- Caption -->",
-            f'  <text x="{width/2}" y="{height - 5}" text-anchor="middle" class="caption">',
+            f'  <text x="{width/2}" y="{caption_y_start}" text-anchor="middle" class="title">',
+            "    The performance of all state-of-the-art models on MedQA-MultiTurnRobustness drops.",
+            "  </text>",
+            f'  <text x="{width/2}" y="{caption_y_start + 18}" text-anchor="middle" class="caption">',
+            "    See the paper for the factors that impact the performance drops in more depth.",
+            "  </text>",
+            f'  <text x="{width/2}" y="{caption_y_start + 32}" text-anchor="middle" class="caption">',
             "    Bars hang downward showing negative accuracy change. Error bars show std dev across 8 interventions. Reasoning parameters mentioned when used.",
             "  </text>",
         ]

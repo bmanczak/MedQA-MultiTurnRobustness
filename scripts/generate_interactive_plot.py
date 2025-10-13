@@ -51,8 +51,7 @@ MODEL_SHORT_NAMES = {
     "together_ai_openai_gpt-oss-20b": "GPT-OSS 20B",
     "together_ai_Qwen_Qwen2.5-72B-Instruct": "Qwen2.5 72B",
     "together_ai_Qwen_Qwen2.5-72B-Instruct-Turbo": "Qwen2.5 72B Turbo",
-    "xai_grok-4-0709": "Grok 4",
-    "xai_grok-4-fast-non-reasoning": "Grok 4 Fast",
+    # Grok 4 excluded (incomplete results)
 }
 
 
@@ -190,6 +189,10 @@ def process_results_directory(results_dir: Path) -> List[Dict]:
             continue
 
         model_id = extract_model_name(model_dir.name)
+        
+        # Skip Grok 4 (incomplete results)
+        if "grok" in model_id.lower():
+            continue
         first_turn_path = model_dir / "first_turn.jsonl"
 
         if not first_turn_path.exists():
@@ -288,7 +291,8 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 width=4,
             ),
             text=[f"{s['drop']:.1f}" for s in avg_stats],
-            textposition="outside",
+            textposition="inside",  # Position text inside bar to avoid SE bar overlap
+            textfont=dict(size=10),
             marker=dict(
                 color="rgba(231, 111, 81, 0.1)",  # Very light fill
                 line=dict(color="#E76F51", width=2.5),  # Thick border
@@ -316,7 +320,8 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 x=[d["model_name"] for d in followup_data],
                 y=[d["drop"] for d in followup_data],
                 text=[f"{d['drop']:.1f}" for d in followup_data],
-                textposition="outside",
+                textposition="inside",  # Position text inside bar
+                textfont=dict(size=10),
                 marker=dict(
                     color="rgba(231, 111, 81, 0.1)",
                     line=dict(color="#E76F51", width=2.5),
@@ -342,7 +347,6 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
             "args": [
                 {"visible": [True] + [False] * len(DEFAULT_FOLLOWUPS)},
                 {
-                    "title.text": "Accuracy Drop: Average Across 8 Interventions",
                     "yaxis.title.text": "Accuracy Drop (%)",
                 },
             ],
@@ -360,21 +364,14 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 "args": [
                     {"visible": visible},
                     {
-                        "title.text": f"Accuracy Drop: {FOLLOWUP_NAMES[followup]}",
                         "yaxis.title.text": "Accuracy Drop (%)",
                     },
                 ],
             }
         )
 
-    # Update layout with inverted y-axis
+    # Update layout with inverted y-axis (no title, will be in caption)
     fig.update_layout(
-        title={
-            "text": "Accuracy Drop: Average Across 8 Interventions",
-            "x": 0.5,
-            "xanchor": "center",
-            "font": {"size": 20, "color": "#2C3E50"},
-        },
         xaxis={
             "title": "Models",
             "tickangle": -45,
@@ -409,23 +406,24 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
         ],
         width=1200,
         height=600,
-        margin=dict(l=80, r=50, t=120, b=150),
+        margin=dict(l=80, r=50, t=80, b=180),  # Reduced top margin, increased bottom for caption
         annotations=[
             dict(
                 text=(
-                    "Bars hang downward showing negative accuracy change. "
-                    "Error bars show standard deviation across 8 interventions. "
-                    "Reasoning/thinking parameters are explicitly mentioned when used (e.g., 'low', 'high'). "
-                    "Hover for flip rates."
+                    "<b>The performance of all state-of-the-art models on MedQA-MultiTurnRobustness drops.</b><br>"
+                    "See the <a href='#'>paper</a> for the factors that impact the performance drops in more depth.<br>"
+                    "<br>"
+                    "<i>Bars hang downward showing negative accuracy change. Error bars show standard deviation across 8 interventions. "
+                    "Reasoning/thinking parameters are explicitly mentioned when used (e.g., 'low', 'high'). Hover for flip rates.</i>"
                 ),
                 showarrow=False,
                 xref="paper",
                 yref="paper",
                 x=0.5,
-                y=-0.25,
+                y=-0.28,
                 xanchor="center",
                 yanchor="top",
-                font=dict(size=10, color="#666"),
+                font=dict(size=10, color="#2C3E50"),
                 align="center",
             )
         ],
