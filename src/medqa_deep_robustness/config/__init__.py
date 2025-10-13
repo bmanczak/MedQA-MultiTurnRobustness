@@ -52,6 +52,7 @@ class BaseModelConfig:
 class LiteLLMConfig(BaseModelConfig):
     type: str = "litellm"
     max_send_messages: int = 100
+    max_retries: int = 5
     extra_kwargs: Dict[str, Any] = field(default_factory=dict)
 
 
