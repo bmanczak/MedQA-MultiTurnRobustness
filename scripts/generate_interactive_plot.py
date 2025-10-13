@@ -443,6 +443,12 @@ def main() -> None:
     print("Processing results...")
     data = process_results_directory(results_dir)
 
+    if not data:
+        raise RuntimeError(
+            "No evaluation data found in results/. Ensure prediction artifacts are present "
+            "and Git LFS objects are fetched (e.g., `git lfs install` followed by `git lfs pull`)."
+        )
+
     unique_models = len(set(d["model_name"] for d in data))
     print(f"Processed {len(data)} data points from {unique_models} model configurations")
 
