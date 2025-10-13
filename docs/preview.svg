@@ -50,84 +50,90 @@
   <text x="30" y="300.0" text-anchor="middle" class="axis-label" transform="rotate(-90, 30, 300.0)">Accuracy Drop (%)</text>
   
   <!-- Bars -->
-  <rect x="92.34615384615384" y="94.13835848563077" width="57.61538461538461" height="309.44490566466897" class="bar">
+  <rect x="91.46428571428572" y="94.13835848563077" width="53.5" height="309.44490566466897" class="bar">
     <title>Claude Sonnet 4: -43.8% drop (±22.1%)</title>
   </rect>
-  <text x="121.15384615384615" y="385.5832641502997" text-anchor="middle" class="value-label">-43.8</text>
-  <text x="121.15384615384615" y="399.5832641502997" text-anchor="middle" class="value-label" font-size="11">(±22.1)</text>
-  <text x="121.15384615384615" y="465" text-anchor="end" class="label" transform="rotate(-45, 121.15384615384615, 465)">Claude Sonnet 4</text>
-  <rect x="174.65384615384616" y="94.13835848563077" width="57.61538461538461" height="187.50156372610343" class="bar">
+  <text x="118.21428571428572" y="385.5832641502997" text-anchor="middle" class="value-label">-43.8</text>
+  <text x="118.21428571428572" y="399.5832641502997" text-anchor="middle" class="value-label" font-size="11">(±22.1)</text>
+  <text x="118.21428571428572" y="465" text-anchor="end" class="label" transform="rotate(-45, 118.21428571428572, 465)">Claude Sonnet 4</text>
+  <rect x="167.89285714285717" y="94.13835848563077" width="53.5" height="187.50156372610343" class="bar">
     <title>Claude Sonnet 4.5: -26.5% drop (±19.0%)</title>
   </rect>
-  <text x="203.46153846153845" y="263.6399222117342" text-anchor="middle" class="value-label">-26.5</text>
-  <text x="203.46153846153845" y="277.6399222117342" text-anchor="middle" class="value-label" font-size="11">(±19.0)</text>
-  <text x="203.46153846153845" y="465" text-anchor="end" class="label" transform="rotate(-45, 203.46153846153845, 465)">Claude Sonnet 4.5</text>
-  <rect x="256.96153846153845" y="94.13835848563077" width="57.61538461538461" height="167.05143805938746" class="bar">
+  <text x="194.64285714285717" y="263.6399222117342" text-anchor="middle" class="value-label">-26.5</text>
+  <text x="194.64285714285717" y="277.6399222117342" text-anchor="middle" class="value-label" font-size="11">(±19.0)</text>
+  <text x="194.64285714285717" y="465" text-anchor="end" class="label" transform="rotate(-45, 194.64285714285717, 465)">Claude Sonnet 4.5</text>
+  <rect x="244.32142857142858" y="94.13835848563077" width="53.5" height="167.05143805938746" class="bar">
     <title>Qwen2.5 72B Turbo: -23.6% drop (±19.9%)</title>
   </rect>
-  <text x="285.7692307692308" y="243.18979654501823" text-anchor="middle" class="value-label">-23.6</text>
-  <text x="285.7692307692308" y="257.1897965450182" text-anchor="middle" class="value-label" font-size="11">(±19.9)</text>
-  <text x="285.7692307692308" y="465" text-anchor="end" class="label" transform="rotate(-45, 285.7692307692308, 465)">Qwen2.5 72B Turbo</text>
-  <rect x="339.2692307692308" y="94.13835848563077" width="57.61538461538461" height="137.68068144340447" class="bar">
+  <text x="271.07142857142856" y="243.18979654501823" text-anchor="middle" class="value-label">-23.6</text>
+  <text x="271.07142857142856" y="257.1897965450182" text-anchor="middle" class="value-label" font-size="11">(±19.9)</text>
+  <text x="271.07142857142856" y="465" text-anchor="end" class="label" transform="rotate(-45, 271.07142857142856, 465)">Qwen2.5 72B Turbo</text>
+  <rect x="320.75" y="94.13835848563077" width="53.5" height="137.68068144340447" class="bar">
     <title>GPT-4o: -19.5% drop (±25.6%)</title>
   </rect>
-  <text x="368.0769230769231" y="213.81903992903526" text-anchor="middle" class="value-label">-19.5</text>
-  <text x="368.0769230769231" y="227.81903992903526" text-anchor="middle" class="value-label" font-size="11">(±25.6)</text>
-  <text x="368.0769230769231" y="465" text-anchor="end" class="label" transform="rotate(-45, 368.0769230769231, 465)">GPT-4o</text>
-  <rect x="421.5769230769231" y="94.13835848563077" width="57.61538461538461" height="109.23565068064728" class="bar">
+  <text x="347.5" y="213.81903992903526" text-anchor="middle" class="value-label">-19.5</text>
+  <text x="347.5" y="227.81903992903526" text-anchor="middle" class="value-label" font-size="11">(±25.6)</text>
+  <text x="347.5" y="465" text-anchor="end" class="label" transform="rotate(-45, 347.5, 465)">GPT-4o</text>
+  <rect x="397.17857142857144" y="94.13835848563077" width="53.5" height="109.23565068064728" class="bar">
     <title>MedGemma 27B: -15.5% drop (±19.5%)</title>
   </rect>
-  <text x="450.3846153846154" y="185.37400916627806" text-anchor="middle" class="value-label">-15.5</text>
-  <text x="450.3846153846154" y="199.37400916627806" text-anchor="middle" class="value-label" font-size="11">(±19.5)</text>
-  <text x="450.3846153846154" y="465" text-anchor="end" class="label" transform="rotate(-45, 450.3846153846154, 465)">MedGemma 27B</text>
-  <rect x="503.8846153846154" y="94.13835848563077" width="57.61538461538461" height="99.97839214838912" class="bar">
+  <text x="423.92857142857144" y="185.37400916627806" text-anchor="middle" class="value-label">-15.5</text>
+  <text x="423.92857142857144" y="199.37400916627806" text-anchor="middle" class="value-label" font-size="11">(±19.5)</text>
+  <text x="423.92857142857144" y="465" text-anchor="end" class="label" transform="rotate(-45, 423.92857142857144, 465)">MedGemma 27B</text>
+  <rect x="473.6071428571429" y="94.13835848563077" width="53.5" height="99.97839214838912" class="bar">
     <title>MedGemma 4B: -14.1% drop (±15.6%)</title>
   </rect>
-  <text x="532.6923076923077" y="176.1167506340199" text-anchor="middle" class="value-label">-14.1</text>
-  <text x="532.6923076923077" y="190.1167506340199" text-anchor="middle" class="value-label" font-size="11">(±15.6)</text>
-  <text x="532.6923076923077" y="465" text-anchor="end" class="label" transform="rotate(-45, 532.6923076923077, 465)">MedGemma 4B</text>
-  <rect x="586.1923076923076" y="94.13835848563077" width="57.61538461538461" height="73.30065619633568" class="bar">
+  <text x="500.3571428571429" y="176.1167506340199" text-anchor="middle" class="value-label">-14.1</text>
+  <text x="500.3571428571429" y="190.1167506340199" text-anchor="middle" class="value-label" font-size="11">(±15.6)</text>
+  <text x="500.3571428571429" y="465" text-anchor="end" class="label" transform="rotate(-45, 500.3571428571429, 465)">MedGemma 4B</text>
+  <rect x="550.0357142857142" y="94.13835848563077" width="53.5" height="73.30065619633568" class="bar">
     <title>Gemini 2.5 Flash: -10.4% drop (±12.8%)</title>
   </rect>
-  <text x="614.9999999999999" y="149.43901468196646" text-anchor="middle" class="value-label">-10.4</text>
-  <text x="614.9999999999999" y="163.43901468196646" text-anchor="middle" class="value-label" font-size="11">(±12.8)</text>
-  <text x="614.9999999999999" y="465" text-anchor="end" class="label" transform="rotate(-45, 614.9999999999999, 465)">Gemini 2.5 Flash</text>
-  <rect x="668.5" y="94.13835848563077" width="57.61538461538461" height="41.57350649941425" class="bar">
+  <text x="576.7857142857142" y="149.43901468196646" text-anchor="middle" class="value-label">-10.4</text>
+  <text x="576.7857142857142" y="163.43901468196646" text-anchor="middle" class="value-label" font-size="11">(±12.8)</text>
+  <text x="576.7857142857142" y="465" text-anchor="end" class="label" transform="rotate(-45, 576.7857142857142, 465)">Gemini 2.5 Flash</text>
+  <rect x="626.4642857142857" y="94.13835848563077" width="53.5" height="49.40009780395995" class="bar">
+    <title>Gemini 2.5 Pro: -7.0% drop (±7.0%)</title>
+  </rect>
+  <text x="653.2142857142857" y="125.53845628959073" text-anchor="middle" class="value-label">-7.0</text>
+  <text x="653.2142857142857" y="139.53845628959073" text-anchor="middle" class="value-label" font-size="11">(±7.0)</text>
+  <text x="653.2142857142857" y="465" text-anchor="end" class="label" transform="rotate(-45, 653.2142857142857, 465)">Gemini 2.5 Pro</text>
+  <rect x="702.8928571428571" y="94.13835848563077" width="53.5" height="41.57350649941425" class="bar">
     <title>Grok 4 Fast: -5.9% drop (±12.6%)</title>
   </rect>
-  <text x="697.3076923076923" y="117.71186498504503" text-anchor="middle" class="value-label">-5.9</text>
-  <text x="697.3076923076923" y="131.71186498504503" text-anchor="middle" class="value-label" font-size="11">(±12.6)</text>
-  <text x="697.3076923076923" y="465" text-anchor="end" class="label" transform="rotate(-45, 697.3076923076923, 465)">Grok 4 Fast</text>
-  <rect x="750.8076923076923" y="94.13835848563077" width="57.61538461538461" height="9.341415428006044" class="bar">
+  <text x="729.6428571428571" y="117.71186498504503" text-anchor="middle" class="value-label">-5.9</text>
+  <text x="729.6428571428571" y="131.71186498504503" text-anchor="middle" class="value-label" font-size="11">(±12.6)</text>
+  <text x="729.6428571428571" y="465" text-anchor="end" class="label" transform="rotate(-45, 729.6428571428571, 465)">Grok 4 Fast</text>
+  <rect x="779.3214285714286" y="94.13835848563077" width="53.5" height="9.341415428006044" class="bar">
     <title>GPT-OSS 20B: -1.3% drop (±3.5%)</title>
   </rect>
-  <text x="779.6153846153845" y="85.47977391363682" text-anchor="middle" class="value-label">-1.3</text>
-  <text x="779.6153846153845" y="99.47977391363682" text-anchor="middle" class="value-label" font-size="11">(±3.5)</text>
-  <text x="779.6153846153845" y="465" text-anchor="end" class="label" transform="rotate(-45, 779.6153846153845, 465)">GPT-OSS 20B</text>
-  <rect x="833.1153846153845" y="94.13835848563077" width="57.61538461538461" height="7.910748200293412" class="bar">
+  <text x="806.0714285714286" y="85.47977391363682" text-anchor="middle" class="value-label">-1.3</text>
+  <text x="806.0714285714286" y="99.47977391363682" text-anchor="middle" class="value-label" font-size="11">(±3.5)</text>
+  <text x="806.0714285714286" y="465" text-anchor="end" class="label" transform="rotate(-45, 806.0714285714286, 465)">GPT-OSS 20B</text>
+  <rect x="855.75" y="94.13835848563077" width="53.5" height="7.910748200293412" class="bar">
     <title>GPT-5 mini (high): -1.1% drop (±1.5%)</title>
   </rect>
-  <text x="861.9230769230768" y="84.04910668592419" text-anchor="middle" class="value-label">-1.1</text>
-  <text x="861.9230769230768" y="98.04910668592419" text-anchor="middle" class="value-label" font-size="11">(±1.5)</text>
-  <text x="861.9230769230768" y="465" text-anchor="end" class="label" transform="rotate(-45, 861.9230769230768, 465)">GPT-5 mini (high)</text>
-  <rect x="915.4230769230769" y="94.13835848563077" width="57.61538461538461" height="0.589098270234615" class="bar">
+  <text x="882.5" y="84.04910668592419" text-anchor="middle" class="value-label">-1.1</text>
+  <text x="882.5" y="98.04910668592419" text-anchor="middle" class="value-label" font-size="11">(±1.5)</text>
+  <text x="882.5" y="465" text-anchor="end" class="label" transform="rotate(-45, 882.5, 465)">GPT-5 mini (high)</text>
+  <rect x="932.1785714285714" y="94.13835848563077" width="53.5" height="0.589098270234615" class="bar">
     <title>GPT-5: -0.1% drop (±0.5%)</title>
   </rect>
-  <text x="944.2307692307692" y="76.72745675586539" text-anchor="middle" class="value-label">-0.1</text>
-  <text x="944.2307692307692" y="90.72745675586539" text-anchor="middle" class="value-label" font-size="11">(±0.5)</text>
-  <text x="944.2307692307692" y="465" text-anchor="end" class="label" transform="rotate(-45, 944.2307692307692, 465)">GPT-5</text>
-  <rect x="997.7307692307692" y="94.13835848563077" width="57.61538461538461" height="0.16831379149554948" class="bar">
+  <text x="958.9285714285714" y="76.72745675586539" text-anchor="middle" class="value-label">-0.1</text>
+  <text x="958.9285714285714" y="90.72745675586539" text-anchor="middle" class="value-label" font-size="11">(±0.5)</text>
+  <text x="958.9285714285714" y="465" text-anchor="end" class="label" transform="rotate(-45, 958.9285714285714, 465)">GPT-5</text>
+  <rect x="1008.6071428571428" y="94.13835848563077" width="53.5" height="0.16831379149554948" class="bar">
     <title>GPT-OSS 120B: -0.0% drop (±1.1%)</title>
   </rect>
-  <text x="1026.5384615384614" y="76.30667227712632" text-anchor="middle" class="value-label">-0.0</text>
-  <text x="1026.5384615384614" y="90.30667227712632" text-anchor="middle" class="value-label" font-size="11">(±1.1)</text>
-  <text x="1026.5384615384614" y="465" text-anchor="end" class="label" transform="rotate(-45, 1026.5384615384614, 465)">GPT-OSS 120B</text>
-  <rect x="1080.0384615384614" y="94.13835848563077" width="57.61538461538461" height="0.0" class="bar">
+  <text x="1035.3571428571427" y="76.30667227712632" text-anchor="middle" class="value-label">-0.0</text>
+  <text x="1035.3571428571427" y="90.30667227712632" text-anchor="middle" class="value-label" font-size="11">(±1.1)</text>
+  <text x="1035.3571428571427" y="465" text-anchor="end" class="label" transform="rotate(-45, 1035.3571428571427, 465)">GPT-OSS 120B</text>
+  <rect x="1085.0357142857142" y="94.13835848563077" width="53.5" height="0.0" class="bar">
     <title>GPT-5 mini (low): 0.0% drop (±0.0%)</title>
   </rect>
-  <text x="1108.8461538461538" y="76.13835848563077" text-anchor="middle" class="value-label">0.0</text>
-  <text x="1108.8461538461538" y="90.13835848563077" text-anchor="middle" class="value-label" font-size="11">(±0.0)</text>
-  <text x="1108.8461538461538" y="465" text-anchor="end" class="label" transform="rotate(-45, 1108.8461538461538, 465)">GPT-5 mini (low)</text>
+  <text x="1111.7857142857142" y="76.13835848563077" text-anchor="middle" class="value-label">0.0</text>
+  <text x="1111.7857142857142" y="90.13835848563077" text-anchor="middle" class="value-label" font-size="11">(±0.0)</text>
+  <text x="1111.7857142857142" y="465" text-anchor="end" class="label" transform="rotate(-45, 1111.7857142857142, 465)">GPT-5 mini (low)</text>
   
   <!-- Caption -->
   <text x="600.0" y="560" text-anchor="middle" class="caption">
