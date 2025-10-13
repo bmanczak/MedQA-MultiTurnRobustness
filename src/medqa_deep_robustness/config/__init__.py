@@ -44,7 +44,7 @@ class RunConfig:
 class BaseModelConfig:
     id: str = "openai/gpt-4.1-mini"
     temperature: float = 0.0
-    max_tokens: int = 4096
+    max_tokens: int = 8192
     type: str = "litellm"
 
 
