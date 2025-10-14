@@ -7,8 +7,8 @@
 
 <p align="center">
   <a href="https://bmanczak.github.io/medqa_deep_robustness/">
-    <img src="docs/preview.svg?v=2" alt="Interactive chart showing model performance drops" width="100%">
-    <br><b>▶ Open the Interactive Chart</b>
+    <img src="docs/preview.svg?v=3" alt="Chart showing worst performance drops for each model" width="100%">
+    <br><b>▶ Open the Interactive Chart (explore all 8 interventions)</b>
   </a>
 </p>
 

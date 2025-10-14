@@ -23,24 +23,31 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
     # Filter out Grok 4 (incomplete results), but allow Grok 4 Fast
     # Note: Grok 4 (grok-4-0709) is already filtered in process_results_directory
 
-    # Compute statistics per model
+    # Compute worst drop per model (across all interventions)
     model_stats = {}
     for record in data:
         model = record["model_name"]
+        followup = record["followup_name"]
         if model not in model_stats:
-            model_stats[model] = {"drops": []}
+            model_stats[model] = {"drops": [], "followups": []}
         model_stats[model]["drops"].append(record["drop"])
+        model_stats[model]["followups"].append(followup)
 
-    avg_stats = []
+    worst_stats = []
     for model, values in model_stats.items():
         drops = values["drops"]
-        mean_drop = statistics.mean(drops)
-        std_drop = statistics.stdev(drops) if len(drops) > 1 else 0
+        followups = values["followups"]
 
-        avg_stats.append({"model": model, "drop": mean_drop, "std": std_drop})
+        # Find the worst (most negative) drop
+        worst_idx = drops.index(min(drops))
+        worst_drop = drops[worst_idx]
+        worst_category = followups[worst_idx]
+
+        worst_stats.append({"model": model, "drop": worst_drop, "category": worst_category})
 
     # Sort by drop (most negative first)
-    avg_stats.sort(key=lambda x: x["drop"])
+    worst_stats.sort(key=lambda x: x["drop"])
+    avg_stats = worst_stats  # Rename for compatibility with rest of code
 
     # SVG dimensions
     width = 1200
@@ -75,7 +82,7 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
         "      .grid-line { stroke: #ECF0F1; stroke-width: 1; }",
         "      .axis-line { stroke: #2C3E50; stroke-width: 2; }",
         "      .zero-line { stroke: #2C3E50; stroke-width: 2; }",
-        "      .bar { fill: rgba(231, 111, 81, 0.1); stroke: #E76F51; stroke-width: 2.5; }",
+        "      .bar { fill: rgba(220, 53, 69, 0.15); stroke: #dc3545; stroke-width: 2.5; }",
         "      .error-bar { stroke: #2C3E50; stroke-width: 1.5; }",
         "      .label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; fill: #2C3E50; }",
         "      .value-label { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; fill: #2C3E50; font-weight: 500; }",
@@ -129,18 +136,22 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
 
         # Bar (hanging downward from 0)
         svg_parts.append(f'  <rect x="{x}" y="{bar_top_y}" width="{bar_width}" height="{bar_height}" class="bar">')
-        svg_parts.append(f'    <title>{record["model"]}: {record["drop"]:.1f}% drop (±{record["std"]:.1f}%)</title>')
+        svg_parts.append(
+            f'    <title>{record["model"]}: {record["drop"]:.1f}% worst drop ({record["category"]})</title>'
+        )
         svg_parts.append("  </rect>")
 
-        # Value labels stacked (drop on top, std below)
+        # Value label (just the drop value)
         label_x = x + bar_width / 2
-        label_y_drop = bar_bottom_y - 18  # Position for drop value
-        label_y_std = bar_bottom_y - 4  # Position for std value (below drop)
+        label_y_drop = bar_bottom_y - 10  # Position for drop value
         svg_parts.append(
             f'  <text x="{label_x}" y="{label_y_drop}" text-anchor="middle" class="value-label">{record["drop"]:.1f}</text>'
         )
+
+        # Category label (smaller, above the bar)
+        category_y = bar_bottom_y - 24
         svg_parts.append(
-            f'  <text x="{label_x}" y="{label_y_std}" text-anchor="middle" class="value-label" font-size="11">(±{record["std"]:.1f})</text>'
+            f'  <text x="{label_x}" y="{category_y}" text-anchor="middle" class="label" font-size="9" fill="#565656">{record["category"]}</text>'
         )
 
         # Model name label (rotated)
@@ -163,7 +174,7 @@ def create_svg_preview(data: List[Dict], output_path: Path) -> None:
             "    See the paper for the factors that impact the performance drops in more depth. Bars hang downward showing negative accuracy change.",
             "  </text>",
             f'  <text x="{width/2}" y="{caption_y_start + 30}" text-anchor="middle" class="caption">',
-            "    Values show mean ± std dev across 8 interventions. Reasoning parameters mentioned when used.",
+            "    Values show worst drop across 8 interventions with the intervention name shown above each bar.",
             "  </text>",
         ]
     )
