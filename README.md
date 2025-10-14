@@ -16,7 +16,7 @@
 
 This repository accompanies the research paper "Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs" ([link]). It provides:
 
-- (1) **[Interactive visualization](https://bmanczak.github.io/medqa_deep_robustness/)** of SOTA models performance drops across 8 interventions
+- (1) **[Interactive visualization](https://bmanczak.github.io/MedQA-MultiTurnRobustness/)** of SOTA models performance drops across 8 interventions
 - (2) Code to evaluate any local `vLLM` model or any LiteLLM-compatible API model on our proposed dataset
 - (3) Our benchmark dataset `MedQA-MultiTurnRobustness` on Hugging Face: `dynamoai-ml/MedQA-USMLE-4-MultiTurnRobust`
 - (4) Cached runs of SOTA models on our proposed dataset in `results/`

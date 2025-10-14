@@ -30,9 +30,9 @@ FOLLOWUP_NAMES = {
     "br_commitment_alignment": "Commitment Alignment",
     "br_recency_prior": "Recency Prior",
     "br_social_proof_prior": "Social Proof Prior",
-    "context_rag_style": "RAG-Style Context",
-    "alternative_context": "Alternative Context",
-    "edge_case_context": "Edge Case Context",
+    "context_rag_style": "RAG-Style",
+    "alternative_context": "Alternative",
+    "edge_case_context": "Edge Case",
 }
 
 # Short model names (base)
@@ -322,11 +322,11 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
     fig.add_trace(
         go.Scatter(
             x=[s["model"] for s in worst_stats],
-            y=[s["drop"] - 0.5 for s in worst_stats],  # Slightly above bar top
+            y=[s["drop"] - 5.5 for s in worst_stats],  # Position on top of bar
             text=[s["category"] for s in worst_stats],
             mode="text",
             textposition="bottom center",
-            textfont=dict(size=9, color="#565656"),
+            textfont=dict(size=10, color="#2C3E50"),
             name="Category Labels",
             visible=True,
             showlegend=False,
@@ -452,7 +452,7 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 "showactive": True,
                 "x": 0.02,
                 "xanchor": "left",
-                "y": 1.08,
+                "y": 1.18,
                 "yanchor": "top",
                 "bgcolor": "#f5f5f5",
                 "bordercolor": "#d0d0d0",
