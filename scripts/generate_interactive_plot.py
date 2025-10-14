@@ -254,6 +254,7 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
         model_stats[model]["flip_rates"].append(record["flip_rate"])
 
     avg_stats = []
+    worst_stats = []
     for model, values in model_stats.items():
         drops = values["drops"]
         mean_drop = statistics.mean(drops)
@@ -269,30 +270,84 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
             }
         )
 
+        # Find worst drop for this model
+        model_data = [d for d in data if d["model_name"] == model]
+        worst_record = min(model_data, key=lambda x: x["drop"])
+        worst_stats.append(
+            {
+                "model": model,
+                "drop": worst_record["drop"],
+                "category": worst_record["followup_name"],
+                "flip_rate": worst_record["flip_rate"],
+            }
+        )
+
     # Sort by drop (most negative first = worst performers)
     avg_stats.sort(key=lambda x: x["drop"])
+    worst_stats.sort(key=lambda x: x["drop"])
 
     # Find max drop for y-axis range
-    all_drops = [s["drop"] for s in avg_stats]
+    all_drops = [s["drop"] for s in avg_stats] + [s["drop"] for s in worst_stats]
     max_abs_drop = max(abs(min(all_drops)), abs(max(all_drops)))
 
     # Create figure
     fig = go.Figure()
 
-    # Add average bars (default view)
+    # Add worst drop bars (default view)
+    fig.add_trace(
+        go.Bar(
+            x=[s["model"] for s in worst_stats],
+            y=[s["drop"] for s in worst_stats],
+            text=[f"{s['drop']:.1f}" for s in worst_stats],
+            textposition="inside",
+            textfont=dict(size=12, color="#1e1e1e"),
+            marker=dict(
+                color="rgba(220, 53, 69, 0.15)",  # Slightly stronger red tint for worst
+                line=dict(color="#dc3545", width=2.5),  # Red border
+            ),
+            name="Worst Drop",
+            visible=True,
+            customdata=[[s["category"], s["flip_rate"]] for s in worst_stats],
+            hovertemplate=(
+                "<b>%{x}</b><br>"
+                "Worst Drop: %{y:.1f}%<br>"
+                "Category: %{customdata[0]}<br>"
+                "Flip Rate: %{customdata[1]:.1f}%<br>"
+                "<extra></extra>"
+            ),
+        )
+    )
+
+    # Add category labels above bars for worst drop
+    fig.add_trace(
+        go.Scatter(
+            x=[s["model"] for s in worst_stats],
+            y=[s["drop"] - 0.5 for s in worst_stats],  # Slightly above bar top
+            text=[s["category"] for s in worst_stats],
+            mode="text",
+            textposition="bottom center",
+            textfont=dict(size=9, color="#565656"),
+            name="Category Labels",
+            visible=True,
+            showlegend=False,
+            hoverinfo="skip",
+        )
+    )
+
+    # Add average bars (hidden by default)
     fig.add_trace(
         go.Bar(
             x=[s["model"] for s in avg_stats],
             y=[s["drop"] for s in avg_stats],
             text=[f"{s['drop']:.1f}<br>(±{s['std']:.1f})" for s in avg_stats],
-            textposition="inside",  # Position text inside bar, stacked
-            textfont=dict(size=12),
+            textposition="inside",
+            textfont=dict(size=12, color="#1e1e1e"),
             marker=dict(
-                color="rgba(231, 111, 81, 0.1)",  # Very light fill
-                line=dict(color="#E76F51", width=2.5),  # Thick border
+                color="rgba(231, 111, 81, 0.1)",
+                line=dict(color="#E76F51", width=2.5),
             ),
             name="Average",
-            visible=True,
+            visible=False,
             customdata=[[s["std"], s["flip_rate"]] for s in avg_stats],
             hovertemplate=(
                 "<b>%{x}</b><br>"
@@ -333,23 +388,31 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
             )
         )
 
-    # Create dropdown menu
+    # Create dropdown menu (now has 2 extra traces at start: worst bar + labels, then avg)
+    total_traces = 2 + 1 + len(DEFAULT_FOLLOWUPS)  # worst+labels, average, individual followups
+
     buttons = [
+        {
+            "label": "Worst Drop",
+            "method": "update",
+            "args": [
+                {"visible": [True, True, False] + [False] * len(DEFAULT_FOLLOWUPS)},
+                {"yaxis.title.text": "Accuracy Drop (%)"},
+            ],
+        },
         {
             "label": "Average (All 8 Interventions)",
             "method": "update",
             "args": [
-                {"visible": [True] + [False] * len(DEFAULT_FOLLOWUPS)},
-                {
-                    "yaxis.title.text": "Accuracy Drop (%)",
-                },
+                {"visible": [False, False, True] + [False] * len(DEFAULT_FOLLOWUPS)},
+                {"yaxis.title.text": "Accuracy Drop (%)"},
             ],
-        }
+        },
     ]
 
     for i, followup in enumerate(DEFAULT_FOLLOWUPS):
-        visible = [False] * (len(DEFAULT_FOLLOWUPS) + 1)
-        visible[i + 1] = True
+        visible = [False] * total_traces
+        visible[3 + i] = True  # Individual followups start at index 3
 
         buttons.append(
             {
@@ -357,9 +420,7 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 "method": "update",
                 "args": [
                     {"visible": visible},
-                    {
-                        "yaxis.title.text": "Accuracy Drop (%)",
-                    },
+                    {"yaxis.title.text": "Accuracy Drop (%)"},
                 ],
             }
         )
@@ -400,23 +461,24 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
         ],
         width=1200,
         height=600,
-        margin=dict(l=80, r=50, t=110, b=180),  # Increased top margin for dropdown selector
+        margin=dict(l=80, r=50, t=110, b=200),  # Increased bottom margin for caption
         annotations=[
             dict(
                 text=(
                     "The performance of all state-of-the-art models on MedQA-MultiTurnRobustness drops.<br>"
-                    "See the <a href='https://bmanczak.github.io/medqa_deep_robustness/'>paper</a> for the factors that impact the performance drops in more depth. "
-                    "Bars hang downward showing negative accuracy change. Values show mean ± std dev across 8 interventions. "
-                    "Reasoning/thinking parameters are explicitly mentioned when used (e.g., 'low', 'high'). Hover for flip rates."
+                    "See the <a href='https://bmanczak.github.io/medqa_deep_robustness/'>paper</a> for factors impacting drops. "
+                    "Bars hang downward showing negative accuracy change.<br>"
+                    "Values show performance metrics across 8 interventions. Reasoning/thinking parameters are explicitly "
+                    "mentioned when used (e.g., 'low', 'high'). Hover for details."
                 ),
                 showarrow=False,
                 xref="paper",
                 yref="paper",
                 x=0.5,
-                y=-0.27,
+                y=-0.28,
                 xanchor="center",
                 yanchor="top",
-                font=dict(size=13, color="#7f8c8d"),  # Larger gray italic caption
+                font=dict(size=12, color="#7f8c8d"),
                 align="center",
             )
         ],
