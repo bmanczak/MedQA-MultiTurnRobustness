@@ -391,16 +391,16 @@ def create_interactive_plot(data: List[Dict], output_path: Path) -> None:
                 "showactive": True,
                 "x": 0.02,
                 "xanchor": "left",
-                "y": 0.98,
+                "y": 1.08,
                 "yanchor": "top",
-                "bgcolor": "#ECF0F1",
-                "bordercolor": "#2C3E50",
+                "bgcolor": "#f5f5f5",
+                "bordercolor": "#d0d0d0",
                 "font": {"size": 11},
             }
         ],
         width=1200,
         height=600,
-        margin=dict(l=80, r=50, t=80, b=180),  # Increased bottom margin for larger caption
+        margin=dict(l=80, r=50, t=110, b=180),  # Increased top margin for dropdown selector
         annotations=[
             dict(
                 text=(
