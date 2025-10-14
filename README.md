@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <a href="https://bmanczak.github.io/medqa_deep_robustness/">
+  <a href="https://bmanczak.github.io/MedQA-MultiTurnRobustness/">
     <img src="docs/preview.svg?v=3" alt="Chart showing worst performance drops for each model" width="100%">
     <br><b>▶ Open the Interactive Chart (explore all 8 interventions)</b>
   </a>
