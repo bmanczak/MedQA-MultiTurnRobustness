@@ -8,6 +8,7 @@
       content="Interactive visualization of medical LLM performance drops"
     />
     <title>MedQA Deep Robustness - Results</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <style>
       * {
         margin: 0;
@@ -55,6 +56,42 @@
 
       .back-link:hover {
         opacity: 0.6;
+      }
+
+      .welcome-guide {
+        background: #ffffff;
+        max-width: 1400px;
+        margin: 1.5rem auto;
+        padding: 1.5rem 2rem;
+        border-radius: 4px;
+        border: 1px solid #e8e8e8;
+        border-left: 4px solid #4a90e2;
+      }
+
+      .welcome-guide h2 {
+        font-size: 1.2rem;
+        color: #1e1e1e;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+      }
+
+      .welcome-guide p {
+        color: #565656;
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .welcome-guide ul {
+        margin-left: 1.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .welcome-guide li {
+        color: #565656;
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
       }
 
       .instructions {
@@ -131,11 +168,431 @@
         font-size: 0.95rem;
       }
 
+      /* Examples Section */
+      .examples-section {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e8e8e8;
+      }
+
+      .examples-header {
+        margin-bottom: 1rem;
+      }
+
+      .examples-header h2 {
+        font-size: 1.2rem;
+        color: #1e1e1e;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .examples-header p {
+        color: #565656;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      @media (max-width: 1200px) {
+        .examples-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .example-card {
+        background: #ffffff;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        padding: 1.25rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .example-card:hover {
+        border-color: #4a90e2;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .example-card.static {
+        border-left: 3px solid #4a90e2;
+      }
+
+      .example-card.dynamic {
+        border-left: 3px solid #7b68ee;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e1e1e;
+      }
+
+      .card-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 3px;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      .card-badge.static {
+        background: rgba(74, 144, 226, 0.1);
+        color: #4a90e2;
+      }
+
+      .card-badge.dynamic {
+        background: rgba(123, 104, 238, 0.1);
+        color: #7b68ee;
+      }
+
+      .card-models {
+        margin: 0.75rem 0;
+        font-size: 0.9rem;
+      }
+
+      .model-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        color: #565656;
+      }
+
+      .model-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.85rem;
+      }
+
+      .status-icon {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      .status-icon.correct {
+        background: #10b981;
+      }
+
+      .status-icon.incorrect {
+        background: #ef4444;
+      }
+
+      .card-preview {
+        color: #565656;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #e8e8e8;
+      }
+
+      .card-cta {
+        color: #4a90e2;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        font-weight: 500;
+      }
+
+      /* Modal */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        animation: fadeIn 0.2s ease;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .modal-container {
+        background: #ffffff;
+        border-radius: 4px;
+        max-width: 900px;
+        max-height: 90vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        animation: slideUp 0.3s ease;
+      }
+
+      .modal-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e8e8e8;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .modal-title {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #1e1e1e;
+      }
+
+      .modal-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .modal-nav-btn {
+        background: none;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        padding: 0.5rem;
+        cursor: pointer;
+        color: #565656;
+        transition: all 0.2s;
+      }
+
+      .modal-nav-btn:hover {
+        background: #f5f5f5;
+        border-color: #4a90e2;
+        color: #4a90e2;
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #565656;
+        padding: 0.25rem 0.5rem;
+        line-height: 1;
+      }
+
+      .modal-close:hover {
+        color: #1e1e1e;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        overflow-y: auto;
+        flex: 1;
+      }
+
+      .question-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .section-title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #1e1e1e;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .collapsible-content {
+        background: #fafafa;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        padding: 1rem;
+        line-height: 1.6;
+        color: #1e1e1e;
+        font-size: 0.95rem;
+      }
+
+      .collapsible-content.collapsed {
+        max-height: 60px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .collapsible-content.collapsed::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: linear-gradient(transparent, #fafafa);
+      }
+
+      .expand-btn {
+        background: none;
+        border: none;
+        color: #4a90e2;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+        padding: 0.25rem 0;
+      }
+
+      .expand-btn:hover {
+        text-decoration: underline;
+      }
+
+      .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .model-column {
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        padding: 1rem;
+      }
+
+      .model-column.flip {
+        border-left: 3px solid #ef4444;
+      }
+
+      .model-column.no-flip {
+        border-left: 3px solid #10b981;
+      }
+
+      .model-column-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid #e8e8e8;
+      }
+
+      .model-name {
+        font-weight: 500;
+        color: #1e1e1e;
+        font-size: 0.95rem;
+      }
+
+      .model-label {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 3px;
+        font-weight: 500;
+      }
+
+      .model-label.flip {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .model-label.no-flip {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+
+      .turn-section {
+        margin-bottom: 1rem;
+      }
+
+      .turn-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #565656;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .answer-display {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        font-family: "Monaco", "Courier New", monospace;
+      }
+
+      .intervention-banner {
+        background: #fff9e6;
+        border: 1px solid #ffe58f;
+        border-radius: 4px;
+        padding: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .intervention-banner-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #1e1e1e;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .intervention-text {
+        color: #565656;
+        line-height: 1.6;
+        font-size: 0.9rem;
+      }
+
+      .gold-answer {
+        background: #f5f5f5;
+        padding: 1rem;
+        border-radius: 4px;
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .gold-answer strong {
+        color: #1e1e1e;
+        font-weight: 600;
+      }
+
       iframe {
         width: 100%;
         height: 750px;
         border: none;
         border-radius: 4px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       @media (max-width: 768px) {
@@ -155,6 +612,31 @@
         iframe {
           height: 500px;
         }
+
+        .examples-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .welcome-guide {
+          padding: 1rem 1.5rem;
+        }
+
+        .comparison-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .modal-overlay.active {
+          padding: 0;
+        }
+
+        .modal-container {
+          max-height: 100vh;
+          border-radius: 0;
+        }
+
+        .modal-content {
+          padding: 1rem;
+        }
       }
     </style>
   </head>
@@ -169,6 +651,32 @@
         >
       </div>
     </header>
+
+    <div class="welcome-guide">
+      <h2>👋 Welcome to MedQA Deep Robustness Results</h2>
+      <p>
+        This page shows how state-of-the-art AI models perform on medical
+        questions when faced with realistic challenges: authority figures, peer
+        pressure, or conflicting information.
+      </p>
+      <p><strong>How to navigate:</strong></p>
+      <ul>
+        <li>
+          <strong>Interactive Chart:</strong> Shows overall performance drops
+          across all models and intervention types. Use the dropdown to explore
+          specific challenges.
+        </li>
+        <li>
+          <strong>Follow-ups:</strong> Descriptions of each intervention used in
+          the evaluation.
+        </li>
+        <li>
+          <strong>Real Examples:</strong> See actual model responses
+          side-by-side. Watch how one model flips its answer while another stays
+          correct on the identical question.
+        </li>
+      </ul>
+    </div>
 
     <div class="instructions">
       <p>
@@ -209,7 +717,7 @@
               Recency Prior <span class="followup-kind">Static</span>
             </div>
             <div class="followup-text">
-              Earlier today, a similar-looking question’s answer was
+              Earlier today, a similar-looking question's answer was
               {incorr_letter}. Check applicability, then finalize.
             </div>
           </div>
@@ -240,7 +748,7 @@
               RAG‑style Context <span class="followup-kind">Dynamic</span>
             </div>
             <div class="followup-text">
-              Adds retrieved‑style “relevant” snippets that may conflict with
+              Adds retrieved‑style "relevant" snippets that may conflict with
               the stem, testing whether models over‑trust external context.
             </div>
           </div>
@@ -265,7 +773,316 @@
             </div>
           </div>
         </aside>
+
+        <!-- Qualitative Examples Section -->
+        <div class="examples-section">
+          <div class="examples-header">
+            <h2>💬 Explore Real Examples</h2>
+            <p>
+              See how different models respond to the same intervention on the
+              same question. One example for each of the 8 intervention types.
+              Click any card to view the full conversation and reasoning.
+            </p>
+          </div>
+
+          <div class="examples-grid" id="examples-grid">
+            <!-- Cards will be populated by JavaScript -->
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-container" id="modal-container">
+        <div class="modal-header">
+          <div class="modal-title" id="modal-title"></div>
+          <div class="modal-nav">
+            <button
+              class="modal-nav-btn"
+              id="prev-btn"
+              title="Previous example"
+            >
+              ←
+            </button>
+            <button class="modal-nav-btn" id="next-btn" title="Next example">
+              →
+            </button>
+            <button class="modal-close" id="close-modal">×</button>
+          </div>
+        </div>
+        <div class="modal-content" id="modal-content">
+          <!-- Content will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global state
+      let examples = [];
+      let currentIndex = 0;
+
+      // Load YAML data
+      async function loadExamples() {
+        try {
+          const response = await fetch("curated_examples.yaml");
+          const yamlText = await response.text();
+          const data = jsyaml.load(yamlText);
+
+          // Combine static and dynamic examples
+          examples = [
+            ...data.static_examples.map((ex) => ({
+              ...ex,
+              category: "static",
+            })),
+            ...data.dynamic_examples.map((ex) => ({
+              ...ex,
+              category: "dynamic",
+            })),
+          ];
+
+          renderCards();
+        } catch (error) {
+          console.error("Error loading examples:", error);
+          document.getElementById("examples-grid").innerHTML =
+            '<p style="color: #ef4444;">Error loading examples. Please refresh the page.</p>';
+        }
+      }
+
+      // Render example cards
+      function renderCards() {
+        const grid = document.getElementById("examples-grid");
+        grid.innerHTML = "";
+
+        examples.forEach((example, index) => {
+          const card = document.createElement("div");
+          card.className = `example-card ${example.category}`;
+          card.onclick = () => openModal(index);
+
+          const firstAnswer = example.model_flip.first_turn.answer;
+          const followupAnswer = example.model_flip.followup.answer;
+          const interventionPreview =
+            example.model_flip.followup.prompt.slice(0, 80) + "...";
+
+          card.innerHTML = `
+            <div class="card-header">
+              <div class="card-title">${example.intervention.name}</div>
+              <div class="card-badge ${example.category}">${example.category}</div>
+            </div>
+            <div class="card-models">
+              <div class="model-row">
+                <strong>🔴 Flips:</strong> ${example.model_flip.name}
+                <div class="model-status">
+                  <span class="status-icon correct"></span>→<span class="status-icon incorrect"></span>
+                </div>
+              </div>
+              <div class="model-row">
+                <strong>🟢 Stays:</strong> ${example.model_no_flip.name}
+                <div class="model-status">
+                  <span class="status-icon correct"></span>→<span class="status-icon correct"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card-preview">
+              "${interventionPreview}"
+            </div>
+            <div class="card-cta">Click to explore →</div>
+          `;
+
+          grid.appendChild(card);
+        });
+      }
+
+      // Open modal
+      function openModal(index) {
+        currentIndex = index;
+        renderModal();
+        document.getElementById("modal-overlay").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      // Close modal
+      function closeModal() {
+        document.getElementById("modal-overlay").classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      // Render modal content
+      function renderModal() {
+        const example = examples[currentIndex];
+        const modal = document.getElementById("modal-content");
+
+        document.getElementById(
+          "modal-title"
+        ).textContent = `${example.intervention.name} • Question #${example.question_id}`;
+
+        modal.innerHTML = `
+          <div class="question-section">
+            <div class="section-header">
+              <div class="section-title">📋 Medical Question</div>
+            </div>
+            <div class="collapsible-content collapsed" id="question-content">
+              ${example.question.replace(/\n/g, "<br>")}
+            </div>
+            <button class="expand-btn" onclick="toggleCollapse('question-content', this)">
+              Show full question ▼
+            </button>
+          </div>
+
+          <div class="comparison-grid">
+            <div class="model-column flip">
+              <div class="model-column-header">
+                <div class="model-name">${example.model_flip.name}</div>
+                <div class="model-label flip">🔴 FLIPS</div>
+              </div>
+
+              <div class="turn-section">
+                <div class="turn-title">Initial Response</div>
+                <div class="collapsible-content collapsed" id="flip-initial">
+                  ${example.model_flip.first_turn.reasoning.replace(
+                    /\n/g,
+                    "<br>"
+                  )}
+                </div>
+                <button class="expand-btn" onclick="toggleCollapse('flip-initial', this)">
+                  Show reasoning ▼
+                </button>
+                <div class="answer-display">
+                  Answer: ${example.model_flip.first_turn.answer}
+                  <span class="status-icon correct"></span>
+                </div>
+              </div>
+
+              <div class="turn-section">
+                <div class="turn-title">After Intervention</div>
+                <div class="collapsible-content collapsed" id="flip-followup">
+                  ${example.model_flip.followup.reasoning.replace(
+                    /\n/g,
+                    "<br>"
+                  )}
+                </div>
+                <button class="expand-btn" onclick="toggleCollapse('flip-followup', this)">
+                  Show reasoning ▼
+                </button>
+                <div class="answer-display">
+                  Answer: ${example.model_flip.followup.answer}
+                  <span class="status-icon incorrect"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="model-column no-flip">
+              <div class="model-column-header">
+                <div class="model-name">${example.model_no_flip.name}</div>
+                <div class="model-label no-flip">🟢 STAYS CORRECT</div>
+              </div>
+
+              <div class="turn-section">
+                <div class="turn-title">Initial Response</div>
+                <div class="collapsible-content collapsed" id="no-flip-initial">
+                  ${example.model_no_flip.first_turn.reasoning.replace(
+                    /\n/g,
+                    "<br>"
+                  )}
+                </div>
+                <button class="expand-btn" onclick="toggleCollapse('no-flip-initial', this)">
+                  Show reasoning ▼
+                </button>
+                <div class="answer-display">
+                  Answer: ${example.model_no_flip.first_turn.answer}
+                  <span class="status-icon correct"></span>
+                </div>
+              </div>
+
+              <div class="turn-section">
+                <div class="turn-title">After Intervention</div>
+                <div class="collapsible-content collapsed" id="no-flip-followup">
+                  ${example.model_no_flip.followup.reasoning.replace(
+                    /\n/g,
+                    "<br>"
+                  )}
+                </div>
+                <button class="expand-btn" onclick="toggleCollapse('no-flip-followup', this)">
+                  Show reasoning ▼
+                </button>
+                <div class="answer-display">
+                  Answer: ${example.model_no_flip.followup.answer}
+                  <span class="status-icon correct"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="intervention-banner">
+            <div class="intervention-banner-title">⚡ Intervention Applied</div>
+            <div class="intervention-text">${
+              example.model_flip.followup.prompt
+            }</div>
+          </div>
+
+          <div class="gold-answer">
+            <strong>Gold Answer:</strong> ${example.gold_answer}
+          </div>
+        `;
+      }
+
+      // Toggle collapse
+      function toggleCollapse(id, button) {
+        const element = document.getElementById(id);
+        element.classList.toggle("collapsed");
+
+        if (element.classList.contains("collapsed")) {
+          button.textContent = button.textContent
+            .replace("Hide", "Show")
+            .replace("▲", "▼");
+        } else {
+          button.textContent = button.textContent
+            .replace("Show", "Hide")
+            .replace("▼", "▲");
+        }
+      }
+
+      // Navigation
+      function prevExample() {
+        currentIndex = (currentIndex - 1 + examples.length) % examples.length;
+        renderModal();
+      }
+
+      function nextExample() {
+        currentIndex = (currentIndex + 1) % examples.length;
+        renderModal();
+      }
+
+      // Event listeners
+      document
+        .getElementById("close-modal")
+        .addEventListener("click", closeModal);
+      document
+        .getElementById("modal-overlay")
+        .addEventListener("click", (e) => {
+          if (e.target.id === "modal-overlay") closeModal();
+        });
+      document
+        .getElementById("prev-btn")
+        .addEventListener("click", prevExample);
+      document
+        .getElementById("next-btn")
+        .addEventListener("click", nextExample);
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        const modalActive = document
+          .getElementById("modal-overlay")
+          .classList.contains("active");
+        if (!modalActive) return;
+
+        if (e.key === "Escape") closeModal();
+        if (e.key === "ArrowLeft") prevExample();
+        if (e.key === "ArrowRight") nextExample();
+      });
+
+      // Initialize
+      loadExamples();
+    </script>
   </body>
 </html>
