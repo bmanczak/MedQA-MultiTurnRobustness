@@ -1,7 +1,7 @@
 # Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs
 
 <p align="center">
-  <a href="https://arxiv.org/abs/XXXX.XXXXX"><img src="https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b.svg" alt="arXiv"></a>
+  <a href="https://arxiv.org/abs/2510.12255"><img src="https://img.shields.io/badge/arXiv-2510.12255-b31b1b.svg" alt="arXiv"></a>
   <a href="https://huggingface.co/datasets/dynamoai-ml/MedQA-USMLE-4-MultiTurnRobust"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Dataset-blue" alt="Hugging Face Dataset"></a>
 </p>
 
@@ -119,6 +119,22 @@ misleading_context:
 Changes are picked up automatically on the next run. To sweep all defined follow-ups, set `run.followups=all`.
 
 ---
+
+### Citation
+
+If our work is useful for you, please cite us 🤗 
+
+```
+@misc{manczak2025shallowrobustnessdeepvulnerabilities,
+      title={Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs}, 
+      author={Blazej Manczak and Eric Lin and Francisco Eiras and James O' Neill and Vaikkunth Mugunthan},
+      year={2025},
+      eprint={2510.12255},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2510.12255}, 
+}
+```
 
 <details>
 <summary>Advanced details</summary>
