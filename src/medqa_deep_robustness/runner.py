@@ -48,6 +48,10 @@ def _prepare_run_dir(cfg: DictConfig, root: Path, n_examples: int) -> Path:
         "system_prompt": cfg.prompts.system_prompt,
         "followups": followups_value,
     }
+    # Include extra_kwargs in signature only when non-empty (backwards compatible)
+    extra_kwargs = cfg.model.get("extra_kwargs", {})
+    if extra_kwargs:
+        signature_payload["extra_kwargs"] = dict(OmegaConf.to_container(extra_kwargs, resolve=True))
     signature = stable_config_signature(signature_payload)
     model_tag = _sanitize(cfg.model.id)
     dataset_tag = _sanitize(cfg.run.dataset_name)
