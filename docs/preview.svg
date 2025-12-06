@@ -68,90 +68,108 @@
   <text x="30" y="300.0" text-anchor="middle" class="axis-label" transform="rotate(-90, 30, 300.0)">Accuracy Drop (%)</text>
   
   <!-- Bars -->
-  <rect x="91.46428571428572" y="87.70183872726372" width="53.5" height="315.04187936759683" class="bar">
+  <rect x="89.44117647058823" y="87.70183872726372" width="44.05882352941176" height="315.04187936759683" class="bar">
     <title>Claude Sonnet 4: -81.8% worst drop (RAG-Style)</title>
   </rect>
-  <text x="118.21428571428572" y="392.7437180948605" text-anchor="middle" class="value-label">-81.8</text>
-  <text x="118.21428571428572" y="378.7437180948605" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="118.21428571428572" y="465" text-anchor="end" class="label" transform="rotate(-45, 118.21428571428572, 465)">Claude Sonnet 4</text>
-  <rect x="167.89285714285717" y="87.70183872726372" width="53.5" height="313.57486246716564" class="bar">
+  <text x="111.47058823529412" y="392.7437180948605" text-anchor="middle" class="value-label">-81.8</text>
+  <text x="111.47058823529412" y="378.7437180948605" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="111.47058823529412" y="465" text-anchor="end" class="label" transform="rotate(-45, 111.47058823529412, 465)">Claude Sonnet 4</text>
+  <rect x="152.38235294117646" y="87.70183872726372" width="44.05882352941176" height="313.57486246716564" class="bar">
     <title>GPT-4o: -81.4% worst drop (RAG-Style)</title>
   </rect>
-  <text x="194.64285714285717" y="391.27670119442934" text-anchor="middle" class="value-label">-81.4</text>
-  <text x="194.64285714285717" y="377.27670119442934" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="194.64285714285717" y="465" text-anchor="end" class="label" transform="rotate(-45, 194.64285714285717, 465)">GPT-4o</text>
-  <rect x="244.32142857142858" y="87.70183872726372" width="53.5" height="265.1633047529366" class="bar">
+  <text x="174.41176470588235" y="391.27670119442934" text-anchor="middle" class="value-label">-81.4</text>
+  <text x="174.41176470588235" y="377.27670119442934" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="174.41176470588235" y="465" text-anchor="end" class="label" transform="rotate(-45, 174.41176470588235, 465)">GPT-4o</text>
+  <rect x="215.3235294117647" y="87.70183872726372" width="44.05882352941176" height="265.1633047529366" class="bar">
     <title>Qwen2.5 72B Turbo: -68.9% worst drop (RAG-Style)</title>
   </rect>
-  <text x="271.07142857142856" y="342.8651434802003" text-anchor="middle" class="value-label">-68.9</text>
-  <text x="271.07142857142856" y="328.8651434802003" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="271.07142857142856" y="465" text-anchor="end" class="label" transform="rotate(-45, 271.07142857142856, 465)">Qwen2.5 72B Turbo</text>
-  <rect x="320.75" y="87.70183872726372" width="53.5" height="263.3295336273976" class="bar">
+  <text x="237.35294117647058" y="342.8651434802003" text-anchor="middle" class="value-label">-68.9</text>
+  <text x="237.35294117647058" y="328.8651434802003" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="237.35294117647058" y="465" text-anchor="end" class="label" transform="rotate(-45, 237.35294117647058, 465)">Qwen2.5 72B Turbo</text>
+  <rect x="278.2647058823529" y="87.70183872726372" width="44.05882352941176" height="263.3295336273976" class="bar">
     <title>Claude Sonnet 4.5: -68.4% worst drop (RAG-Style)</title>
   </rect>
-  <text x="347.5" y="341.0313723546613" text-anchor="middle" class="value-label">-68.4</text>
-  <text x="347.5" y="327.0313723546613" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="347.5" y="465" text-anchor="end" class="label" transform="rotate(-45, 347.5, 465)">Claude Sonnet 4.5</text>
-  <rect x="397.17857142857144" y="87.70183872726372" width="53.5" height="207.94964563612032" class="bar">
+  <text x="300.2941176470588" y="341.0313723546613" text-anchor="middle" class="value-label">-68.4</text>
+  <text x="300.2941176470588" y="327.0313723546613" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="300.2941176470588" y="465" text-anchor="end" class="label" transform="rotate(-45, 300.2941176470588, 465)">Claude Sonnet 4.5</text>
+  <rect x="341.20588235294116" y="87.70183872726372" width="44.05882352941176" height="219.31902661446205" class="bar">
+    <title>Claude Sonnet 4.5 (medium): -57.0% worst drop (RAG-Style)</title>
+  </rect>
+  <text x="363.235294117647" y="297.02086534172577" text-anchor="middle" class="value-label">-57.0</text>
+  <text x="363.235294117647" y="283.02086534172577" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="363.235294117647" y="465" text-anchor="end" class="label" transform="rotate(-45, 363.235294117647, 465)">Claude Sonnet 4.5 (medium)</text>
+  <rect x="404.1470588235294" y="87.70183872726372" width="44.05882352941176" height="207.94964563612032" class="bar">
     <title>MedGemma 27B: -54.0% worst drop (RAG-Style)</title>
   </rect>
-  <text x="423.92857142857144" y="285.65148436338404" text-anchor="middle" class="value-label">-54.0</text>
-  <text x="423.92857142857144" y="271.65148436338404" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="423.92857142857144" y="465" text-anchor="end" class="label" transform="rotate(-45, 423.92857142857144, 465)">MedGemma 27B</text>
-  <rect x="473.6071428571429" y="87.70183872726372" width="53.5" height="162.83887594786148" class="bar">
+  <text x="426.17647058823525" y="285.65148436338404" text-anchor="middle" class="value-label">-54.0</text>
+  <text x="426.17647058823525" y="271.65148436338404" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="426.17647058823525" y="465" text-anchor="end" class="label" transform="rotate(-45, 426.17647058823525, 465)">MedGemma 27B</text>
+  <rect x="467.0882352941176" y="87.70183872726372" width="44.05882352941176" height="162.83887594786148" class="bar">
     <title>MedGemma 4B: -42.3% worst drop (RAG-Style)</title>
   </rect>
-  <text x="500.3571428571429" y="240.5407146751252" text-anchor="middle" class="value-label">-42.3</text>
-  <text x="500.3571428571429" y="226.5407146751252" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="500.3571428571429" y="465" text-anchor="end" class="label" transform="rotate(-45, 500.3571428571429, 465)">MedGemma 4B</text>
-  <rect x="550.0357142857142" y="87.70183872726372" width="53.5" height="141.56713089160925" class="bar">
+  <text x="489.1176470588235" y="240.5407146751252" text-anchor="middle" class="value-label">-42.3</text>
+  <text x="489.1176470588235" y="226.5407146751252" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="489.1176470588235" y="465" text-anchor="end" class="label" transform="rotate(-45, 489.1176470588235, 465)">MedGemma 4B</text>
+  <rect x="530.0294117647059" y="87.70183872726372" width="44.05882352941176" height="141.56713089160925" class="bar">
     <title>Grok 4 Fast: -36.8% worst drop (RAG-Style)</title>
   </rect>
-  <text x="576.7857142857142" y="219.26896961887297" text-anchor="middle" class="value-label">-36.8</text>
-  <text x="576.7857142857142" y="205.26896961887297" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="576.7857142857142" y="465" text-anchor="end" class="label" transform="rotate(-45, 576.7857142857142, 465)">Grok 4 Fast</text>
-  <rect x="626.4642857142857" y="87.70183872726372" width="53.5" height="138.99985131585467" class="bar">
+  <text x="552.0588235294117" y="219.26896961887297" text-anchor="middle" class="value-label">-36.8</text>
+  <text x="552.0588235294117" y="205.26896961887297" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="552.0588235294117" y="465" text-anchor="end" class="label" transform="rotate(-45, 552.0588235294117, 465)">Grok 4 Fast</text>
+  <rect x="592.9705882352941" y="87.70183872726372" width="44.05882352941176" height="138.99985131585467" class="bar">
     <title>Gemini 2.5 Flash: -36.1% worst drop (RAG-Style)</title>
   </rect>
-  <text x="653.2142857142857" y="216.7016900431184" text-anchor="middle" class="value-label">-36.1</text>
-  <text x="653.2142857142857" y="202.7016900431184" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="653.2142857142857" y="465" text-anchor="end" class="label" transform="rotate(-45, 653.2142857142857, 465)">Gemini 2.5 Flash</text>
-  <rect x="702.8928571428571" y="87.70183872726372" width="53.5" height="71.51707389602021" class="bar">
+  <text x="615.0" y="216.7016900431184" text-anchor="middle" class="value-label">-36.1</text>
+  <text x="615.0" y="202.7016900431184" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="615.0" y="465" text-anchor="end" class="label" transform="rotate(-45, 615.0, 465)">Gemini 2.5 Flash</text>
+  <rect x="655.9117647058824" y="87.70183872726372" width="44.05882352941176" height="128.36397878772857" class="bar">
+    <title>anthropic_claude-opus-4-5-20251101: -33.3% worst drop (RAG-Style)</title>
+  </rect>
+  <text x="677.9411764705883" y="206.0658175149923" text-anchor="middle" class="value-label">-33.3</text>
+  <text x="677.9411764705883" y="192.0658175149923" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="677.9411764705883" y="465" text-anchor="end" class="label" transform="rotate(-45, 677.9411764705883, 465)">anthropic_claude-opus-4-5-20251101</text>
+  <rect x="718.8529411764706" y="87.70183872726372" width="44.05882352941176" height="71.51707389602021" class="bar">
     <title>Gemini 2.5 Pro: -18.6% worst drop (Autograder Prior)</title>
   </rect>
-  <text x="729.6428571428571" y="149.21891262328393" text-anchor="middle" class="value-label">-18.6</text>
-  <text x="729.6428571428571" y="135.21891262328393" text-anchor="middle" class="label" font-size="9" fill="#565656">Autograder Prior</text>
-  <text x="729.6428571428571" y="465" text-anchor="end" class="label" transform="rotate(-45, 729.6428571428571, 465)">Gemini 2.5 Pro</text>
-  <rect x="779.3214285714286" y="87.70183872726372" width="53.5" height="34.10814293502504" class="bar">
+  <text x="740.8823529411765" y="149.21891262328393" text-anchor="middle" class="value-label">-18.6</text>
+  <text x="740.8823529411765" y="135.21891262328393" text-anchor="middle" class="label" font-size="9" fill="#565656">Autograder Prior</text>
+  <text x="740.8823529411765" y="465" text-anchor="end" class="label" transform="rotate(-45, 740.8823529411765, 465)">Gemini 2.5 Pro</text>
+  <rect x="781.7941176470588" y="87.70183872726372" width="44.05882352941176" height="34.10814293502504" class="bar">
     <title>GPT-OSS 20B: -8.9% worst drop (RAG-Style)</title>
   </rect>
-  <text x="806.0714285714286" y="111.80998166228876" text-anchor="middle" class="value-label">-8.9</text>
-  <text x="806.0714285714286" y="97.80998166228876" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="806.0714285714286" y="465" text-anchor="end" class="label" transform="rotate(-45, 806.0714285714286, 465)">GPT-OSS 20B</text>
-  <rect x="855.75" y="87.70183872726372" width="53.5" height="14.670169004311845" class="bar">
+  <text x="803.8235294117646" y="111.80998166228876" text-anchor="middle" class="value-label">-8.9</text>
+  <text x="803.8235294117646" y="97.80998166228876" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="803.8235294117646" y="465" text-anchor="end" class="label" transform="rotate(-45, 803.8235294117646, 465)">GPT-OSS 20B</text>
+  <rect x="844.7352941176471" y="87.70183872726372" width="44.05882352941176" height="25.6727957575458" class="bar">
+    <title>gemini_gemini-3-pro-preview (medium): -6.7% worst drop (RAG-Style)</title>
+  </rect>
+  <text x="866.7647058823529" y="103.37463448480952" text-anchor="middle" class="value-label">-6.7</text>
+  <text x="866.7647058823529" y="89.37463448480952" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="866.7647058823529" y="465" text-anchor="end" class="label" transform="rotate(-45, 866.7647058823529, 465)">gemini_gemini-3-pro-preview (medium)</text>
+  <rect x="907.6764705882354" y="87.70183872726372" width="44.05882352941176" height="14.670169004311845" class="bar">
     <title>GPT-5 mini (high): -3.8% worst drop (RAG-Style)</title>
   </rect>
-  <text x="882.5" y="92.37200773157556" text-anchor="middle" class="value-label">-3.8</text>
-  <text x="882.5" y="78.37200773157556" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
-  <text x="882.5" y="465" text-anchor="end" class="label" transform="rotate(-45, 882.5, 465)">GPT-5 mini (high)</text>
-  <rect x="932.1785714285714" y="87.70183872726372" width="53.5" height="6.601576051940299" class="bar">
+  <text x="929.7058823529412" y="92.37200773157556" text-anchor="middle" class="value-label">-3.8</text>
+  <text x="929.7058823529412" y="78.37200773157556" text-anchor="middle" class="label" font-size="9" fill="#565656">RAG-Style</text>
+  <text x="929.7058823529412" y="465" text-anchor="end" class="label" transform="rotate(-45, 929.7058823529412, 465)">GPT-5 mini (high)</text>
+  <rect x="970.6176470588235" y="87.70183872726372" width="44.05882352941176" height="6.601576051940299" class="bar">
     <title>GPT-OSS 120B: -1.7% worst drop (Autograder Prior)</title>
   </rect>
-  <text x="958.9285714285714" y="84.30341477920402" text-anchor="middle" class="value-label">-1.7</text>
-  <text x="958.9285714285714" y="70.30341477920402" text-anchor="middle" class="label" font-size="9" fill="#565656">Autograder Prior</text>
-  <text x="958.9285714285714" y="465" text-anchor="end" class="label" transform="rotate(-45, 958.9285714285714, 465)">GPT-OSS 120B</text>
-  <rect x="1008.6071428571428" y="87.70183872726372" width="53.5" height="3.300788025970178" class="bar">
+  <text x="992.6470588235294" y="84.30341477920402" text-anchor="middle" class="value-label">-1.7</text>
+  <text x="992.6470588235294" y="70.30341477920402" text-anchor="middle" class="label" font-size="9" fill="#565656">Autograder Prior</text>
+  <text x="992.6470588235294" y="465" text-anchor="end" class="label" transform="rotate(-45, 992.6470588235294, 465)">GPT-OSS 120B</text>
+  <rect x="1033.5588235294117" y="87.70183872726372" width="44.05882352941176" height="3.300788025970178" class="bar">
     <title>GPT-5: -0.9% worst drop (Autograder Prior)</title>
   </rect>
-  <text x="1035.3571428571427" y="81.0026267532339" text-anchor="middle" class="value-label">-0.9</text>
-  <text x="1035.3571428571427" y="67.0026267532339" text-anchor="middle" class="label" font-size="9" fill="#565656">Autograder Prior</text>
-  <text x="1035.3571428571427" y="465" text-anchor="end" class="label" transform="rotate(-45, 1035.3571428571427, 465)">GPT-5</text>
-  <rect x="1085.0357142857142" y="87.70183872726372" width="53.5" height="0.0" class="bar">
+  <text x="1055.5882352941176" y="81.0026267532339" text-anchor="middle" class="value-label">-0.9</text>
+  <text x="1055.5882352941176" y="67.0026267532339" text-anchor="middle" class="label" font-size="9" fill="#565656">Autograder Prior</text>
+  <text x="1055.5882352941176" y="465" text-anchor="end" class="label" transform="rotate(-45, 1055.5882352941176, 465)">GPT-5</text>
+  <rect x="1096.5" y="87.70183872726372" width="44.05882352941176" height="0.0" class="bar">
     <title>GPT-5 mini (low): -0.0% worst drop (Authority Prior)</title>
   </rect>
-  <text x="1111.7857142857142" y="77.70183872726372" text-anchor="middle" class="value-label">-0.0</text>
-  <text x="1111.7857142857142" y="63.70183872726372" text-anchor="middle" class="label" font-size="9" fill="#565656">Authority Prior</text>
-  <text x="1111.7857142857142" y="465" text-anchor="end" class="label" transform="rotate(-45, 1111.7857142857142, 465)">GPT-5 mini (low)</text>
+  <text x="1118.5294117647059" y="77.70183872726372" text-anchor="middle" class="value-label">-0.0</text>
+  <text x="1118.5294117647059" y="63.70183872726372" text-anchor="middle" class="label" font-size="9" fill="#565656">Authority Prior</text>
+  <text x="1118.5294117647059" y="465" text-anchor="end" class="label" transform="rotate(-45, 1118.5294117647059, 465)">GPT-5 mini (low)</text>
   
   <!-- Caption -->
   <text x="600.0" y="560" text-anchor="middle" class="caption">
