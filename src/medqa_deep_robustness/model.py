@@ -7,6 +7,51 @@ from typing import Any, Iterable, List, Sequence
 from litellm import batch_completion
 from tqdm import tqdm
 
+REFUSAL_MARKER = "The model has not returned the response"
+
+
+def _safe_get(obj: Any, key: str) -> Any:
+    """Retrieve `key` from dict-like or attribute-bearing objects."""
+    if obj is None:
+        return None
+    if isinstance(obj, dict):
+        return obj.get(key)
+    return getattr(obj, key, None)
+
+
+def _stringify_content(content: Any) -> str | None:
+    """Normalize provider content payloads into plain strings."""
+    if content is None:
+        return None
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts: List[str] = []
+        for chunk in content:
+            if isinstance(chunk, str):
+                parts.append(chunk)
+            elif isinstance(chunk, dict) and "text" in chunk:
+                parts.append(str(chunk["text"]))
+        return "".join(parts) if parts else None
+    return str(content)
+
+
+def _default_parse_generation(responses) -> List[str | None]:
+    """Convert LiteLLM responses into strings while tagging refusals."""
+    parsed: List[str | None] = []
+    for response in responses:
+        choices = _safe_get(response, "choices") or []
+        first_choice = choices[0] if choices else None
+        finish_reason = (_safe_get(first_choice, "finish_reason") or "").lower()
+        message = _safe_get(first_choice, "message")
+        raw_content = _safe_get(message, "content")
+        content = _stringify_content(raw_content)
+        if content is None and finish_reason == "refusal":
+            parsed.append(REFUSAL_MARKER)
+            continue
+        parsed.append(content)
+    return parsed
+
 
 class LitellmModel:
     def __init__(
@@ -19,9 +64,7 @@ class LitellmModel:
     ):
         self._batch_completion = batch_completion
         self.model_id = model_id
-        self.parse_generation_fn = parse_generation_fn or (
-            lambda responses: [response["choices"][0]["message"]["content"] for response in responses]
-        )
+        self.parse_generation_fn = parse_generation_fn or _default_parse_generation
         self.max_send_messages = max_send_messages
         self.generate_kwargs = generate_kwargs or {"temperature": 0.0}
         self.max_retries = max(0, max_retries)
