@@ -3,6 +3,7 @@
 <p align="center">
   <a href="https://arxiv.org/abs/2510.12255"><img src="https://img.shields.io/badge/arXiv-2510.12255-b31b1b.svg" alt="arXiv"></a>
   <a href="https://huggingface.co/datasets/dynamoai-ml/MedQA-USMLE-4-MultiTurnRobust"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Dataset-blue" alt="Hugging Face Dataset"></a>
+  <a href="https://app.primeintellect.ai/dashboard/environments/dynamo-ai/medqa-followup"><img src="https://img.shields.io/badge/Prime%20Intellect-Environment-purple" alt="Prime Intellect"></a>
 </p>
 
 <p align="center">
@@ -21,6 +22,7 @@ This repository accompanies the research paper "Shallow Robustness, Deep Vulnera
 - (3) Our benchmark dataset `MedQA-MultiTurnRobustness` on Hugging Face: `dynamoai-ml/MedQA-USMLE-4-MultiTurnRobust`
 - (4) Cached runs of SOTA models on our proposed dataset in `results/`
 - (5) Tools to extend the evaluation with your own follow-ups in couple lines of code
+- (6) **[Prime Intellect Environment](https://app.primeintellect.ai/dashboard/environments/dynamo-ai/medqa-followup)** — run evaluations via `prime env eval medqa-followup`
 
 ---
 
@@ -122,17 +124,17 @@ Changes are picked up automatically on the next run. To sweep all defined follow
 
 ### Citation
 
-If our work is useful for you, please cite us 🤗 
+If our work is useful for you, please cite us 🤗
 
 ```
 @misc{manczak2025shallowrobustnessdeepvulnerabilities,
-      title={Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs}, 
+      title={Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs},
       author={Blazej Manczak and Eric Lin and Francisco Eiras and James O' Neill and Vaikkunth Mugunthan},
       year={2025},
       eprint={2510.12255},
       archivePrefix={arXiv},
       primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2510.12255}, 
+      url={https://arxiv.org/abs/2510.12255},
 }
 ```
 
